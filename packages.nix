@@ -1,0 +1,19 @@
+pkgs: with pkgs; [
+	firefox
+	thunderbird
+	gh
+	spotify
+	keeweb
+	i3-gaps
+	polybar
+	rofi
+	vscode
+	zulip
+	slack
+	discord
+	nextcloud-client
+	steam
+	gnupg
+	gcc
+	gnumake
+]
