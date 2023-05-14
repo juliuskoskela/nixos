@@ -4,16 +4,22 @@ pkgs:
     settings = {
       font = {
         normal = {
-        #   family = "Fira Code";
+          family = "JetBrains Mono Nerd Font";
           style = "Regular";
           size = 12;
         };
         bold = {
-        #   family = "Fira Code";
+          family = "JetBrains Mono Nerd Font";
           style = "Bold";
           size = 12;
         };
       };
+	  window = {
+		padding = {
+		  x = 10;
+		  y = 10;
+	  	};
+	  };
       colors = {
         primary = {
           background = "#282c34";

@@ -6,8 +6,6 @@ pkgs:
 
     extraConfig = {
       commit.gpgsign = true;
-    #   gpg.format = "ssh";
-    #   gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
-    #   user.signingkey = "~/.ssh/id_rsa.pub";
+      user.signingkey = "8539EF4CE6367B81";
     };
 }

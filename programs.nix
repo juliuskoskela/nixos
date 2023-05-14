@@ -1,14 +1,19 @@
 pkgs:
 let
-	nvimConfig = import ./nvim.nix;
-	zshConfig = import ./zsh.nix;
-	gitConfig = import ./git.nix;
-	alacrittyConfig = import ./alacritty.nix;
+	zshConfig = import ./configs/zsh.nix;
+	gitConfig = import ./configs/git.nix;
+	alacrittyConfig = import ./configs/alacritty.nix;
 in
 {
+	modules = [ nvim ];
 	home-manager.enable = true;
-	neovim = nvimConfig pkgs;
+	neovim.enable = true;
 	alacritty = alacrittyConfig pkgs;
 	git = gitConfig pkgs;
 	zsh = zshConfig pkgs;
+
+	helix = {
+		enable = true;
+		settings.theme = "onedark";
+	};
 }
