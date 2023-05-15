@@ -5,7 +5,6 @@ let
 	alacrittyConfig = import ./configs/alacritty.nix;
 in
 {
-	modules = [ nvim ];
 	home-manager.enable = true;
 	neovim.enable = true;
 	alacritty = alacrittyConfig pkgs;
