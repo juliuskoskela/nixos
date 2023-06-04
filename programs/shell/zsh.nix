@@ -1,8 +1,7 @@
-pkgs:
-	let userAliases = import ./shell-aliases.nix; in
+{shell-aliases, ...}:
 {
 	enable = true;
-	shellAliases = userAliases pkgs;
+	shellAliases = shell-aliases;
 
 	oh-my-zsh = {
 		enable = true;

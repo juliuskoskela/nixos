@@ -6,6 +6,7 @@ pkgs: with pkgs; [
 	# Window Manager GUI
 	rofi
 	feh
+	i3-gaps
 
 	# Editors
 	vscode
@@ -49,7 +50,7 @@ pkgs: with pkgs; [
 	inkscape
 	darktable
 
-	# Financlial
+	# Finance
 	hledger
 
 	# Fonts

@@ -1,4 +1,3 @@
-pkgs:
 let
 	picomConfig = import ./configs/picom.nix;
 	polybarConfig = import ./configs/polybar.nix;

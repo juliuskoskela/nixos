@@ -1,4 +1,3 @@
-pkgs:
 {
 	# General
 	del = "rm -r";
