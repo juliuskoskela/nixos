@@ -26,7 +26,7 @@ pkgs: with pkgs; [
 	gh
 	curl
 	wget
-	python
+	# python
 	appimage-run
 
 	# Entertainment

@@ -4,7 +4,7 @@
 
 { config, pkgs, ... }:
 let
-	state-version = "22.11";
+	state-version = "23.05";
 	home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-${state-version}.tar.gz";
 in
 {
@@ -46,7 +46,6 @@ in
 			description = "Julius Koskela";
 			extraGroups = [ "networkmanager" "wheel" ];
 		};
-
 		juliuskoskela-unikie = {
 			isNormalUser = true;
 			description = "Julius Koskela (Unikie)";
@@ -135,7 +134,7 @@ in
 			curl
 			pkg-config
 			openssl
-			python
+			# python
 			helix
 		];
 	};
