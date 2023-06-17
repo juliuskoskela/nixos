@@ -2,14 +2,10 @@
 #
 # Main NixOS configuration file
 
-{ config, pkgs, ... }:
-let
-  state-version = "23.05";
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-${state-version}.tar.gz";
-in
+{ config, pkgs, home-manager, ...}:
 {
   imports = [
-    /etc/nixos/hardware-configuration.nix
+    ./hardware-configuration.nix
     (import "${home-manager}/nixos")
   ];
 

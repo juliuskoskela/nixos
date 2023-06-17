@@ -1,70 +1,72 @@
 pkgs: with pkgs; [
 
-	# Browser
-	firefox
+  # Browser
+  firefox
 
-	# Window Manager GUI
-	rofi
-	feh
-	i3-gaps
+  # Window Manager GUI
+  rofi
+  feh
+  i3-gaps
 
-	# Editors
-	vscode
-	lapce
+  # Editors
+  vscode
+  lapce
 
-	# Communication
-	zulip
-	slack
-	discord
-	whatsapp-for-linux
-	thunderbird
-	protonmail-bridge
-	neomutt
+  # Communication
+  zulip
+  slack
+  discord
+  whatsapp-for-linux
+  thunderbird
+  protonmail-bridge
+  neomutt
 
-	# Tools
-	nextcloud-client
-	gh
-	curl
-	wget
-	# python
-	appimage-run
+  # Tools
+  nextcloud-client
+  gh
+  curl
+  wget
+  # python
+  appimage-run
 
-	# Entertainment
-	steam
-	spotify
+  # Entertainment
+  steam
+  spotify
 
-	# Security
-	gnupg
-	keeweb
+  # Security
+  gnupg
+  keeweb
 
-	# Development
-	gcc
-	gnumake
+  # Development
+  gcc
+  gnumake
 
-	# Audio
-	bitwig-studio
-	audacity
+  # Audio
+  bitwig-studio
+  audacity
 
-	# Photo
-	gimp
-	inkscape
-	darktable
+  # Photo
+  gimp
+  inkscape
+  darktable
 
-	# Finance
-	hledger
+  # Finance
+  hledger
 
-	# Fonts
-	(nerdfonts.override { fonts = [
-		"FiraCode"
-		"DroidSansMono"
-		"JetBrainsMono"
-	];})
+  # Fonts
+  (nerdfonts.override {
+    fonts = [
+      "FiraCode"
+      "DroidSansMono"
+      "JetBrainsMono"
+    ];
+  })
 
-	# Gnome Extensions
-	gnomeExtensions.user-themes
-    gnomeExtensions.tray-icons-reloaded
-    gnomeExtensions.vitals
-    gnomeExtensions.dash-to-panel
-    gnomeExtensions.sound-output-device-chooser
-    gnomeExtensions.space-bar
+  # Gnome Extensions
+  gnomeExtensions.user-themes
+  gnomeExtensions.tray-icons-reloaded
+  gnomeExtensions.vitals
+  gnomeExtensions.dash-to-panel
+  gnomeExtensions.sound-output-device-chooser
+  gnomeExtensions.space-bar
 ]

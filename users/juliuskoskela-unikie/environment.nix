@@ -1,4 +1,4 @@
 {
-	EDITOR = "hx";
-	GPG_TTY= "$(tty)";
+  EDITOR = "hx";
+  GPG_TTY = "$(tty)";
 }

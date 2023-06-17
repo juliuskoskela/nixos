@@ -1,11 +1,11 @@
-{shell-aliases, ...}:
+{ shell-aliases, ... }:
 {
-	enable = true;
-	shellAliases = shell-aliases;
+  enable = true;
+  shellAliases = shell-aliases;
 
-	oh-my-zsh = {
-		enable = true;
-		plugins = [ "git" ];
-		theme = "robbyrussell";
-  	};
+  oh-my-zsh = {
+    enable = true;
+    plugins = [ "git" ];
+    theme = "robbyrussell";
+  };
 }

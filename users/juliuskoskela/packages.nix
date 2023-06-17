@@ -1,70 +1,82 @@
 pkgs: with pkgs; [
 
-	# Browser
-	firefox
+  # Browser
+  firefox
 
-	# Window Manager GUI
-	rofi
-	feh
-	i3-gaps
+  # Window Manager GUI
+  rofi
+  feh
+  i3-gaps
 
-	# Editors
-	vscode
-	lapce
+  # Editors
+  vscode
+  lapce
 
-	# Communication
-	zulip
-	slack
-	discord
-	whatsapp-for-linux
-	thunderbird
-	protonmail-bridge
-	neomutt
+  # Productivity
+  obsidian
 
-	# Tools
-	nextcloud-client
-	gh
-	curl
-	wget
-	# python
-	appimage-run
+  # Communication
+  zulip
+  slack
+  discord
+  whatsapp-for-linux
+  thunderbird
+  protonmail-bridge
+  neomutt
 
-	# Entertainment
-	steam
-	spotify
+  # Java
+  jdk19
 
-	# Security
-	gnupg
-	keeweb
+  # Tools
+  nextcloud-client
+  gh
+  curl
+  wget
+  nixpkgs-fmt
+  hardinfo
+  appimage-run
 
-	# Development
-	gcc
-	gnumake
+  # Entertainment
+  steam
+  spotify
 
-	# Audio
-	bitwig-studio
-	audacity
+  # Security
+  gnupg
+  keeweb
 
-	# Photo
-	gimp
-	inkscape
-	darktable
+  # Development
+  gcc
+  gnumake
 
-	# Finance
-	hledger
+  # Audio
+  bitwig-studio
+  audacity
 
-	# Fonts
-	(nerdfonts.override { fonts = [
-		"FiraCode"
-		"DroidSansMono"
-		"JetBrainsMono"
-	];})
+  # Photo
+  gimp
+  inkscape
+  darktable
 
-	# Gnome Extensions
-	gnomeExtensions.user-themes
-    gnomeExtensions.tray-icons-reloaded
-    gnomeExtensions.vitals
-    gnomeExtensions.dash-to-panel
-    gnomeExtensions.sound-output-device-chooser
-    gnomeExtensions.space-bar
+  # Finance
+  hledger
+
+  # Fonts
+  (nerdfonts.override {
+    fonts = [
+      "FiraCode"
+      "DroidSansMono"
+      "JetBrainsMono"
+    ];
+  })
+
+  # Texlive
+  (texlive.combine { inherit (texlive) scheme-medium xifthen ifmtarg framed paralist titlesec; })
+
+  # Gnome Extensions
+  gnomeExtensions.user-themes
+  gnomeExtensions.tray-icons-reloaded
+  gnomeExtensions.vitals
+  gnomeExtensions.dash-to-panel
+  gnomeExtensions.sound-output-device-chooser
+  gnomeExtensions.space-bar
 ]
