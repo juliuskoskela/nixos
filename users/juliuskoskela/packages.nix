@@ -1,5 +1,5 @@
-pkgs: with pkgs; [
-
+pkgs:
+with pkgs; [
   # Browser
   firefox
 
@@ -70,7 +70,7 @@ pkgs: with pkgs; [
   })
 
   # Texlive
-  (texlive.combine { inherit (texlive) scheme-medium xifthen ifmtarg framed paralist titlesec; })
+  (texlive.combine {inherit (texlive) scheme-medium xifthen ifmtarg framed paralist titlesec;})
 
   # Gnome Extensions
   gnomeExtensions.user-themes

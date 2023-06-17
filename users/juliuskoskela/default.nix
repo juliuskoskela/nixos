@@ -1,12 +1,15 @@
-{ state-version, config, pkgs, ... }:
-let
+{
+  state-version,
+  config,
+  pkgs,
+  ...
+}: let
   nixvim = import (builtins.fetchGit {
     url = "https://github.com/pta2002/nixvim";
     rev = "cae34a7b8f83293b21c1c0981ba810883719dfe0";
     ref = "refs/heads/nixos-23.05";
   });
-in
-{
+in {
   imports = [
     # For home-manager
     nixvim.homeManagerModules.nixvim

@@ -1,9 +1,14 @@
 ###############################################################################
 #
 # Main NixOS configuration file
-
-{ config, pkgs, home-manager, ...}:
 {
+  config,
+  pkgs,
+  home-manager,
+  ...
+}: let
+  state-version = "23.05";
+in {
   imports = [
     ./hardware-configuration.nix
     (import "${home-manager}/nixos")
@@ -29,25 +34,24 @@
       theme = pkgs.nixos-grub2-theme;
       efiSupport = true;
       efiInstallAsRemovable = true; # Otherwise /boot/EFI/BOOT/BOOTX64.EFI isn't generated
-      devices = [ "nodev" ];
+      devices = ["nodev"];
       useOSProber = true;
       extraEntries = ''
-        		menuentry "Reboot" {
-        			reboot
-        		}
-        		menuentry "Poweroff" {
-        			halt
-        		}
-        		'';
+        menuentry "Reboot" {
+        	reboot
+        }
+        menuentry "Poweroff" {
+        	halt
+        }
+      '';
     };
   };
-
 
   ###########################################################################
   #
   # Nix
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config = {
     allowUnfree = true;
     # TODO! Required by nixvim and Copilot, remove if Copilot is udpated
@@ -65,17 +69,17 @@
     juliuskoskela = {
       isNormalUser = true;
       description = "Julius Koskela";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = ["networkmanager" "wheel"];
     };
     juliuskoskela-unikie = {
       isNormalUser = true;
       description = "Julius Koskela (Unikie)";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = ["networkmanager" "wheel"];
     };
   };
   home-manager.users = {
-    juliuskoskela = import ./users/juliuskoskela { inherit state-version config pkgs; };
-    juliuskoskela-unikie = import ./users/juliuskoskela-unikie { inherit state-version config pkgs; };
+    juliuskoskela = import ../../users/juliuskoskela {inherit state-version config pkgs;};
+    juliuskoskela-unikie = import ../../users/juliuskoskela-unikie {inherit state-version config pkgs;};
   };
 
   ###########################################################################
@@ -84,7 +88,7 @@
 
   services = {
     blueman.enable = true;
-    xserver = import ./programs/desktop/gnome.nix { inherit config pkgs; };
+    xserver = import ../../programs/desktop/gnome.nix {inherit config pkgs;};
     printing.enable = true;
     openssh.enable = true;
     pipewire = {
@@ -100,7 +104,7 @@
   # Networking
 
   networking = {
-    hostName = "nixos";
+    hostName = "nova";
     networkmanager.enable = true;
   };
 

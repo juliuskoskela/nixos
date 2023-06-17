@@ -4,13 +4,13 @@
 {
   config,
   pkgs,
+  home-manager,
   ...
 }: let
   state-version = "23.05";
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-${state-version}.tar.gz";
 in {
   imports = [
-    /etc/nixos/hardware-configuration.nix
+    ./hardware-configuration.nix
     (import "${home-manager}/nixos")
   ];
 
@@ -78,8 +78,8 @@ in {
     };
   };
   home-manager.users = {
-    juliuskoskela = import ./users/juliuskoskela {inherit state-version config pkgs;};
-    juliuskoskela-unikie = import ./users/juliuskoskela-unikie {inherit state-version config pkgs;};
+    juliuskoskela = import ../../users/juliuskoskela {inherit state-version config pkgs;};
+    juliuskoskela-unikie = import ../../users/juliuskoskela-unikie {inherit state-version config pkgs;};
   };
 
   ###########################################################################
@@ -88,7 +88,7 @@ in {
 
   services = {
     blueman.enable = true;
-    xserver = import ./programs/desktop/gnome.nix {inherit config pkgs;};
+    xserver = import ../../programs/desktop/gnome.nix {inherit config pkgs;};
     printing.enable = true;
     openssh.enable = true;
     pipewire = {
@@ -104,7 +104,7 @@ in {
   # Networking
 
   networking = {
-    hostName = "nixos";
+    hostName = "nova";
     networkmanager.enable = true;
   };
 

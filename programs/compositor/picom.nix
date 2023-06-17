@@ -1,5 +1,4 @@
-pkgs:
-{
+pkgs: {
   enable = true;
 
   # Basic
@@ -24,5 +23,5 @@ pkgs:
   # Fade
   fade = true;
   fadeDelta = 10;
-  fadeSteps = [ 0.028 0.03 ];
+  fadeSteps = [0.028 0.03];
 }

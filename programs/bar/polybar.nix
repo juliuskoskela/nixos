@@ -1,5 +1,4 @@
-pkgs:
-{
+pkgs: {
   enable = true;
 
   script = "pkill polybar; sleep 1; polybar bottom &";

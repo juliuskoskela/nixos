@@ -1,6 +1,10 @@
-{ pkgs, lib, ... }:
-let mod = "Mod4"; in
 {
+  pkgs,
+  lib,
+  ...
+}: let
+  mod = "Mod4";
+in {
   enable = true;
   package = pkgs.i3-gaps;
 
@@ -35,7 +39,6 @@ let mod = "Mod4"; in
     # fonts = [ "JetBrains Mono Nerd Fonts" ];
 
     keybindings = lib.mkOptionDefault {
-
       # Special keys
       "XF86AudioMute" = "exec amixer set Master toggle";
       "XF86AudioLowerVolume" = "exec amixer set Master 4%-";

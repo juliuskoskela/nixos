@@ -1,5 +1,9 @@
-{ state-version, config, pkgs, ... }:
 {
+  state-version,
+  config,
+  pkgs,
+  ...
+}: {
   nixpkgs.config = {
     allowUnfree = true;
     # TODO! Required by nixvim and Copilot, remove if Copilot is udpated

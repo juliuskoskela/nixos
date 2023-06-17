@@ -1,8 +1,6 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   shell-aliases = import ./shell-aliases.nix;
-in
-{
+in {
   nixvim = {
     enable = true;
     colorscheme = "ayu";
@@ -16,7 +14,7 @@ in
     };
   };
   alacritty = import ../../programs/terminal/alacritty.nix;
-  zsh = import ../../programs/shell/zsh.nix { inherit shell-aliases; };
+  zsh = import ../../programs/shell/zsh.nix {inherit shell-aliases;};
   git = {
     enable = true;
     userName = "Julius Koskela";

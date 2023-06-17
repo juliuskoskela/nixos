@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   enable = true;
   # videosDrivers = ["nvidia"];
   displayManager.gdm = {
