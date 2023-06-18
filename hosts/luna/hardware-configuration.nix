@@ -12,32 +12,56 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-amd"];
-  boot.extraModulePackages = [];
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/5f2dbea4-8909-4bcc-b394-68621787142b";
-    fsType = "ext4";
+  boot = {
+    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
+    initrd.kernelModules = [];
+    kernelModules = ["kvm-amd"];
+    extraModulePackages = [];
+    loader = {
+      timeout = 30;
+      efi = {
+        efiSysMountPoint = "/boot/efi";
+      };
+      grub = {
+        enable = true;
+        theme = pkgs.nixos-grub2-theme;
+        efiSupport = true;
+        efiInstallAsRemovable = true; # Otherwise /boot/EFI/BOOT/BOOTX64.EFI isn't generated
+        devices = ["nodev"];
+        useOSProber = true;
+        extraEntries = ''
+          menuentry "Reboot" {
+          	reboot
+          }
+          menuentry "Poweroff" {
+          	halt
+          }
+        '';
+      };
+    };
   };
 
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/31CD-78A8";
-    fsType = "vfat";
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/5f2dbea4-8909-4bcc-b394-68621787142b";
+      fsType = "ext4";
+    };
+
+    "/boot/efi" = {
+      device = "/dev/disk/by-uuid/31CD-78A8";
+      fsType = "vfat";
+    };
   };
 
   swapDevices = [{device = "/dev/disk/by-uuid/b448595b-922c-4ebf-ac4d-37a2ce597072";}];
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp37s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  # high-resolution display (deprectaed in 23.05)
-  # hardware.video.hidpi.enable = lib.mkDefault true;
+  hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    bluetooth.enable = true;
+    opengl.driSupport32Bit = true; # Required for Steam
+    pulseaudio.enable = false;
+  };
 }

@@ -12,6 +12,9 @@ with pkgs; [
   vscode
   lapce
 
+  # Productivity
+  obsidian
+
   # Communication
   zulip
   slack
@@ -21,12 +24,16 @@ with pkgs; [
   protonmail-bridge
   neomutt
 
+  # Java
+  jdk19
+
   # Tools
   nextcloud-client
   gh
   curl
   wget
-  # python
+  nixpkgs-fmt
+  hardinfo
   appimage-run
 
   # Entertainment
@@ -61,6 +68,9 @@ with pkgs; [
       "JetBrainsMono"
     ];
   })
+
+  # Texlive
+  (texlive.combine {inherit (texlive) scheme-medium xifthen ifmtarg framed paralist titlesec;})
 
   # Gnome Extensions
   gnomeExtensions.user-themes

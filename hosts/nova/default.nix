@@ -1,51 +1,45 @@
-###############################################################################
+# Nova
 #
-# Main NixOS configuration file
+# Desktop PC system.
 {
+  inputs,
   config,
   pkgs,
-  home-manager,
+  stateVersion,
   ...
 }: let
-  state-version = "23.05";
+  name = "nova";
+  users = import ../../users;
 in {
   imports = [
     ./hardware-configuration.nix
-    (import "${home-manager}/nixos")
+    (import "${inputs.home-manager}/nixos")
+	# ../../programs/hyprland
   ];
 
   ###########################################################################
   #
   # System, hardware and boot
 
-  system.stateVersion = state-version;
-  hardware = {
-    bluetooth.enable = true;
-    opengl.driSupport32Bit = true; # Required for Steam
-    pulseaudio.enable = false;
-  };
-  boot.loader = {
-    timeout = 30;
-    efi = {
-      efiSysMountPoint = "/boot/efi";
-    };
-    grub = {
-      enable = true;
-      theme = pkgs.nixos-grub2-theme;
-      efiSupport = true;
-      efiInstallAsRemovable = true; # Otherwise /boot/EFI/BOOT/BOOTX64.EFI isn't generated
-      devices = ["nodev"];
-      useOSProber = true;
-      extraEntries = ''
-        menuentry "Reboot" {
-        	reboot
-        }
-        menuentry "Poweroff" {
-        	halt
-        }
-      '';
-    };
-  };
+  system.stateVersion = stateVersion;
+
+#   monitors = [
+#     {
+#       name = "DP-1";
+#       width = 2560;
+#       height = 1440;
+#       x = 0;
+#       workspace = "1";
+#     }
+#     {
+#       name = "DP-2";
+#       width = 2560;
+#       height = 1440;
+#       noBar = true;
+#       x = 1440;
+#       workspace = "2";
+#     }
+#   ];
 
   ###########################################################################
   #
@@ -66,20 +60,13 @@ in {
   # Users
 
   users.users = {
-    juliuskoskela = {
-      isNormalUser = true;
-      description = "Julius Koskela";
-      extraGroups = ["networkmanager" "wheel"];
-    };
-    juliuskoskela-unikie = {
-      isNormalUser = true;
-      description = "Julius Koskela (Unikie)";
-      extraGroups = ["networkmanager" "wheel"];
-    };
+    juliuskoskela = users.juliuskoskela.user;
+    # juliuskoskela-unikie = users.juliuskoskela-unikie.user;
   };
+
   home-manager.users = {
-    juliuskoskela = import ../../users/juliuskoskela {inherit state-version config pkgs;};
-    juliuskoskela-unikie = import ../../users/juliuskoskela-unikie {inherit state-version config pkgs;};
+    juliuskoskela = users.juliuskoskela.home {inherit inputs pkgs stateVersion;};
+    # juliuskoskela-unikie = users.juliuskoskela-unikie.home {inherit pkgs stateVersion;};
   };
 
   ###########################################################################
@@ -104,7 +91,7 @@ in {
   # Networking
 
   networking = {
-    hostName = "nova";
+    hostName = name;
     networkmanager.enable = true;
   };
 

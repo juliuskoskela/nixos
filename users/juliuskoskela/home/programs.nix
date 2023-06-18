@@ -13,8 +13,8 @@ in {
       lsp.enable = true;
     };
   };
-  alacritty = import ../../programs/terminal/alacritty.nix;
-  zsh = import ../../programs/shell/zsh.nix {inherit shell-aliases;};
+  alacritty = import ../../../programs/terminal/alacritty.nix;
+  zsh = import ../../../programs/shell/zsh.nix {inherit shell-aliases;};
   git = {
     enable = true;
     userName = "Julius Koskela";
