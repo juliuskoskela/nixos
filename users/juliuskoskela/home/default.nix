@@ -1,13 +1,22 @@
+# users/juliuskoskela/home/default.nix
 {
   inputs,
   pkgs,
-  stateVersion,
   ...
-}: {
+}: let
+  sessionVariables = import ./environment.nix;
+  colorScheme = inputs.nix-colors.colorSchemes.dracula;
+in {
+  inherit colorScheme;
+
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
     inputs.nix-colors.homeManagerModules.default
-	../../../programs/hyprland {inherit inputs;}
+    inputs.hyprland.homeManagerModules.default
+    ../../../kven/programs/zsh
+    ../../../kven/programs/alacritty
+    ../../../kven/programs/nixvim
+    # ../../../kven/programs/hyprland sessionVariables colorScheme
   ];
   nixpkgs.config = {
     allowUnfree = true;
@@ -18,14 +27,49 @@
     ];
   };
   fonts.fontconfig.enable = true;
-  colorScheme = inputs.nix-colors.colorSchemes.dracula;
 
-  home.stateVersion = stateVersion;
-  home.username = "juliuskoskela";
-  home.homeDirectory = "/home/juliuskoskela";
-  home.sessionVariables = import ./environment.nix;
-  home.packages = import ./packages.nix pkgs;
+  home = {
+    stateVersion = inputs.stateVersion;
+    username = "juliuskoskela";
+    homeDirectory = "/home/juliuskoskela";
+    sessionVariables = sessionVariables;
+    packages = import ./packages.nix pkgs;
+  };
 
-  programs = import ./programs.nix pkgs;
-  services = import ./services.nix;
+#   wayland.windowManager.hyprland = {
+#     enable = true;
+#     package = inputs.hyprland.packages.${pkgs.system}.default;
+#     extraConfig = import ../../../kven/programs/hyprland/config.nix {
+#       inherit sessionVariables colorScheme;
+#     };
+#   };
+
+  programs = {
+    # waybar.package = pkgs.waybar.overrideAttrs (oa: {
+    #   mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
+    # });
+    git = {
+      enable = true;
+      userName = "Julius Koskela";
+      userEmail = "me@juliuskoskela.dev";
+
+      extraConfig = {
+        commit.gpgsign = true;
+        user.signingkey = "8539EF4CE6367B81";
+      };
+    };
+
+    helix = {
+      enable = true;
+      settings.theme = "onedark";
+    };
+  };
+
+  services = {
+    gpg-agent = {
+      enable = true;
+      defaultCacheTtl = 1800;
+      enableSshSupport = true;
+    };
+  };
 }

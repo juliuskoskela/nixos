@@ -1,3 +1,4 @@
+# kven/programs/alacritty/config.nix
 {
   enable = true;
   settings = {

@@ -1,49 +1,15 @@
-# Nova
-#
-# Desktop PC system.
-{
-  inputs,
-  config,
-  pkgs,
-  stateVersion,
-  ...
-}: let
+# hosts/nova/default.nix
+{inputs, ...}: let
   name = "nova";
-  users = import ../../users;
 in {
   imports = [
     ./hardware-configuration.nix
     (import "${inputs.home-manager}/nixos")
-	# ../../programs/hyprland
+    ../../kven/programs/gnome
+    ../../users/juliuskoskela
   ];
 
-  ###########################################################################
-  #
-  # System, hardware and boot
-
-  system.stateVersion = stateVersion;
-
-#   monitors = [
-#     {
-#       name = "DP-1";
-#       width = 2560;
-#       height = 1440;
-#       x = 0;
-#       workspace = "1";
-#     }
-#     {
-#       name = "DP-2";
-#       width = 2560;
-#       height = 1440;
-#       noBar = true;
-#       x = 1440;
-#       workspace = "2";
-#     }
-#   ];
-
-  ###########################################################################
-  #
-  # Nix
+  system.stateVersion = inputs.stateVersion;
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config = {
@@ -55,27 +21,9 @@ in {
     ];
   };
 
-  ###########################################################################
-  #
-  # Users
-
-  users.users = {
-    juliuskoskela = users.juliuskoskela.user;
-    # juliuskoskela-unikie = users.juliuskoskela-unikie.user;
-  };
-
-  home-manager.users = {
-    juliuskoskela = users.juliuskoskela.home {inherit inputs pkgs stateVersion;};
-    # juliuskoskela-unikie = users.juliuskoskela-unikie.home {inherit pkgs stateVersion;};
-  };
-
-  ###########################################################################
-  #
-  # Services
-
   services = {
     blueman.enable = true;
-    xserver = import ../../programs/desktop/gnome.nix {inherit config pkgs;};
+    # xserver = import ../../programs/desktop/gnome.nix {inherit config pkgs;};
     printing.enable = true;
     openssh.enable = true;
     pipewire = {
@@ -86,22 +34,12 @@ in {
     };
   };
 
-  ###########################################################################
-  #
-  # Networking
-
   networking = {
     hostName = name;
     networkmanager.enable = true;
   };
 
-  ###########################################################################
-  #
-  # Time and locale
-
-  time = {
-    timeZone = "Europe/Helsinki";
-  };
+  time.timeZone = "Europe/Helsinki";
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
@@ -117,32 +55,11 @@ in {
     };
   };
 
-  ###########################################################################
-  #
-  # Programs
-
-  programs = {
-    dconf.enable = true;
-  };
-
-  ###########################################################################
-  #
-  # Sound
-
+  programs.dconf.enable = true;
   sound.enable = true;
-
-  ###########################################################################
-  #
-  # Security
-
   security.rtkit.enable = true;
-
-  ###########################################################################
-  #
-  # Root environment
-
   environment = {
-    systemPackages = with pkgs; [
+    systemPackages = with inputs.nixpkgs; [
       # neovim
       python3
       nodejs

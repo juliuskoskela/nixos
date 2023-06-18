@@ -1,11 +1,8 @@
-# Nixtro
+# lib
 #
 # Reusable functions and variables for Nix expressions.
-{
-  inputs,
-  stateVersion,
-  ...
-}: let
+{inputs, ...}: let
+  programs = import ./programs;
   # A function that generates attributes for each system architecture.
   # It takes a list of system architectures as input and returns a set of attributes
   # with each architecture as the attribute name.
@@ -22,8 +19,21 @@
   mkNixos = modules:
     inputs.nixpkgs.lib.nixosSystem {
       inherit modules;
-      specialArgs = {inherit inputs stateVersion;};
+      specialArgs = {inherit inputs;};
     };
+
+  mkGitUser = userName: userEmail: gpgPubKey: {
+    programs.git = {
+      enable = true;
+      userName = "${userName}";
+      userEmail = "${userEmail}";
+
+      extraConfig = {
+        commit.gpgsign = true;
+        user.signingkey = "${gpgPubKey}";
+      };
+    };
+  };
 in {
-  inherit stateVersion forEachSystem forEachPkgs mkNixos;
+  inherit programs forEachSystem forEachPkgs mkNixos mkGitUser;
 }

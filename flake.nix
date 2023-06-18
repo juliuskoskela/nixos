@@ -48,8 +48,8 @@
     };
 
     # Hyprwm-contrib provides community scripts and utilities for Hypr
-	# projects such as try_swap_workspace adn scratchpad.
-	hyprwm-contrib = {
+    # projects such as try_swap_workspace adn scratchpad.
+    hyprwm-contrib = {
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -71,21 +71,26 @@
     nixpkgs,
     home-manager,
     nix-colors,
+    hyprland,
     ...
-  } @ inputs: let
-    inherit (self) outputs;
-    stateVersion = "23.05";
-    nixtro = import ./nixtro {inherit inputs stateVersion;};
+  } @ flake-inputs: let
+    # stateVersion = "23.05";
+    inputs =
+      flake-inputs
+      // {
+        stateVersion = "23.05";
+        kven = import ./kven {inherit inputs;};
+      };
   in {
     # The nixosConfigurations attribute in the flake.nix file defines
     # different NixOS system configurations that can be built using the
-    # mkNixos function from the nixtro library.
+    # mkNixos function from the lib library.
     nixosConfigurations = {
-      nova = nixtro.mkNixos [./hosts/nova];
-      #   luna = nixtro.mkNixos [./hosts/luna];
+      nova = inputs.kven.mkNixos [./hosts/nova];
+      #   luna = inputs.kven.mkNixos [./hosts/luna];
     };
 
-    devShells = nixtro.forEachPkgs (pkgs: import ./shell.nix {inherit pkgs;});
-    formatter = nixtro.forEachPkgs (pkgs: pkgs.alejandra);
+    devShells = inputs.kven.forEachPkgs (pkgs: import ./shell.nix {inherit pkgs;});
+    formatter = inputs.kven.forEachPkgs (pkgs: pkgs.alejandra);
   };
 }

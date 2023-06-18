@@ -1,8 +1,8 @@
 {
-  home,
+  sessionVariables,
   colorScheme,
 }: let
-  inherit (home.sessionVariables) TERMINAL BROWSER EDITOR;
+  inherit (sessionVariables) TERMINAL BROWSER EDITOR;
 in ''
   general {
     gaps_in=15
