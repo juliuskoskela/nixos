@@ -86,7 +86,7 @@ in {
       helix
       efibootmgr
       nixpkgs-fmt
-	  cliphist
+      cliphist
     ];
   };
 }

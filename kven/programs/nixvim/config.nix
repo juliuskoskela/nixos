@@ -5,14 +5,14 @@ pkgs: {
   colorschemes.tokyonight.enable = true;
 
   clipboard = {
-	providers.wl-copy.enable = true;
+    providers.wl-copy.enable = true;
     register = "unnamedplus";
   };
 
   extraPlugins = with pkgs.vimPlugins; [
-    vim-nix         # Nix linting
-	vim-fugitive	# Git commands "G: add ."
-	rust-vim        # Rust file detection, syntax highlighting, formatting, Syntastic integration, and more.
+    vim-nix # Nix linting
+    vim-fugitive # Git commands "G: add ."
+    rust-vim # Rust file detection, syntax highlighting, formatting, Syntastic integration, and more.
   ];
 
   options = {
@@ -32,14 +32,14 @@ pkgs: {
       enable = true;
       servers = {
         rust-analyzer.enable = true;
-		rnix-lsp.enable = true;
-		lua-ls.enable = true;
-		ltex.enable = true;
-		clangd.enable = true;
-		pylsp.enable = true;
-		hls.enable = true;
-		html.enable = true;
-		bashls.enable = true;
+        rnix-lsp.enable = true;
+        lua-ls.enable = true;
+        ltex.enable = true;
+        clangd.enable = true;
+        pylsp.enable = true;
+        hls.enable = true;
+        html.enable = true;
+        bashls.enable = true;
       };
     };
   };
