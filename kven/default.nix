@@ -2,7 +2,13 @@
 #
 # Reusable functions and variables for Nix expressions.
 {inputs, ...}: let
-  programs = import ./programs;
+  programs = {
+    zsh = import ./programs/zsh;
+    alacritty = import ./programs/alacritty;
+    nixvim = import ./programs/nixvim;
+    gnome = import ./programs/gnome;
+    hyprland = import ./programs/hyprland;
+  };
   # A function that generates attributes for each system architecture.
   # It takes a list of system architectures as input and returns a set of attributes
   # with each architecture as the attribute name.
@@ -22,18 +28,81 @@
       specialArgs = {inherit inputs;};
     };
 
-  mkGitUser = userName: userEmail: gpgPubKey: {
-    programs.git = {
-      enable = true;
-      userName = "${userName}";
-      userEmail = "${userEmail}";
+  mkUser = {
+    inputs,
+    pkgs,
+    name,
+    description,
+    gitConfig,
+    extraPackages ? [],
+    sessionVariables ? {},
+    shellAliases ? {},
+    userImports ? [],
+    colorScheme ? inputs.nix-colors.colorSchemes.dracula,
+  }: {
+    users.users.${name} = {
+      isNormalUser = true;
+      description = "${description}";
+      extraGroups = ["networkmanager" "wheel"];
+    };
 
-      extraConfig = {
-        commit.gpgsign = true;
-        user.signingkey = "${gpgPubKey}";
+    home-manager.users.${name} = {
+      colorScheme = colorScheme;
+
+      nixpkgs.config = {
+        allowUnfree = true;
+        # TODO! Required by nixvim and Copilot, remove if Copilot is udpated
+        # to use the new version of nodejs.
+        permittedInsecurePackages = [
+          "nodejs-16.20.0"
+        ];
+      };
+      fonts.fontconfig.enable = true;
+
+      home = {
+        inherit sessionVariables;
+        inherit (inputs) stateVersion;
+
+        username = "${name}";
+        homeDirectory = "/home/${name}";
+        packages = extraPackages;
+      };
+
+      imports =
+        [
+          inputs.nixvim.homeManagerModules.nixvim
+          inputs.nix-colors.homeManagerModules.default
+          (inputs.kven.programs.hyprland {inherit inputs pkgs sessionVariables colorScheme;})
+        ]
+        ++ userImports;
+
+      programs.git = mkGitUser gitConfig;
+
+      services = {
+        gpg-agent = {
+          enable = true;
+          defaultCacheTtl = 1800;
+          enableSshSupport = true;
+        };
       };
     };
   };
+
+  # mkHome = modules: pkgs: home-manager.lib.homeManagerConfiguration {
+  #     inherit modules pkgs;
+  #     extraSpecialArgs = { inherit inputs outputs; };
+  #   };
+
+  mkGitUser = gitConfig: {
+    enable = true;
+    userName = "${gitConfig.name}";
+    userEmail = "${gitConfig.email}";
+
+    extraConfig = {
+      commit.gpgsign = true;
+      user.signingkey = "${gitConfig.gpgSignkey}";
+    };
+  };
 in {
-  inherit programs forEachSystem forEachPkgs mkNixos mkGitUser;
+  inherit programs forEachSystem forEachPkgs mkNixos mkUser mkGitUser;
 }

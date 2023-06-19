@@ -1,3 +1,4 @@
+# kven/programs/hyprland/config.nix
 {
   sessionVariables,
   colorScheme,

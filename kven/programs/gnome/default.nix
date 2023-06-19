@@ -1,7 +1,18 @@
 # kven/programs/gnome/default.nix
-pkgs: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   services.xserver = {
     enable = true;
-    config = import ./config.nix {inherit pkgs;};
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+    };
+    layout = "us,fi";
+    xkbVariant = "";
   };
 }

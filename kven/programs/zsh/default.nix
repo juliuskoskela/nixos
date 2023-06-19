@@ -1,4 +1,4 @@
 # kven/programs/zsh/default.nix
-{
-  programs.zsh = import ./config.nix;
+{shellAliases ? {}, ...}: {
+  programs.zsh = import ./config.nix shellAliases;
 }

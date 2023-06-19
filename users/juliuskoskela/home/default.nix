@@ -13,10 +13,10 @@ in {
     inputs.nixvim.homeManagerModules.nixvim
     inputs.nix-colors.homeManagerModules.default
     inputs.hyprland.homeManagerModules.default
-    ../../../kven/programs/zsh
-    ../../../kven/programs/alacritty
-    ../../../kven/programs/nixvim
-    # ../../../kven/programs/hyprland sessionVariables colorScheme
+    inputs.kven.programs.zsh
+    inputs.kven.programs.nixvim
+    inputs.kven.programs.alacritty
+    # inputs.kven.programs.hyprland {inherit inputs;}
   ];
   nixpkgs.config = {
     allowUnfree = true;
@@ -36,18 +36,7 @@ in {
     packages = import ./packages.nix pkgs;
   };
 
-#   wayland.windowManager.hyprland = {
-#     enable = true;
-#     package = inputs.hyprland.packages.${pkgs.system}.default;
-#     extraConfig = import ../../../kven/programs/hyprland/config.nix {
-#       inherit sessionVariables colorScheme;
-#     };
-#   };
-
   programs = {
-    # waybar.package = pkgs.waybar.overrideAttrs (oa: {
-    #   mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
-    # });
     git = {
       enable = true;
       userName = "Julius Koskela";

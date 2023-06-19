@@ -1,5 +1,9 @@
 # hosts/nova/default.nix
-{inputs, ...}: let
+{
+  inputs,
+  pkgs,
+  ...
+}: let
   name = "nova";
 in {
   imports = [
@@ -59,7 +63,7 @@ in {
   sound.enable = true;
   security.rtkit.enable = true;
   environment = {
-    systemPackages = with inputs.nixpkgs; [
+    systemPackages = with pkgs; [
       # neovim
       python3
       nodejs

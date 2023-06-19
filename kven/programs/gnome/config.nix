@@ -1,5 +1,5 @@
 # kven/programs/gnome/config.nix
-pkgs: {
+{pkgs, ...}: {
   enable = true;
   displayManager.gdm.enable = true;
   desktopManager.gnome.enable = true;

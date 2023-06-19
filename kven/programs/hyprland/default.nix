@@ -1,3 +1,4 @@
+# kven/programs/hyprland/default.nix
 {
   inputs,
   pkgs,
@@ -5,33 +6,33 @@
   colorScheme,
   ...
 }: {
-  #   imports = [
-  #     inputs.hyprland.homeManagerModules.default
-  #   ];
-  #   programs = {
-  #     zsh.loginExtra = ''
-  #       if [ "$(tty)" = "/dev/tty1" ]; then
-  #         exec Hyprland &> /dev/null
-  #       fi
-  #     '';
-  #     zsh.profileExtra = ''
-  #       if [ "$(tty)" = "/dev/tty1" ]; then
-  #         exec Hyprland &> /dev/null
-  #       fi
-  #     '';
-  #   };
+  imports = [
+    inputs.hyprland.homeManagerModules.default
+  ];
+  programs = {
+    zsh.loginExtra = ''
+      if [ "$(tty)" = "/dev/tty1" ]; then
+        exec Hyprland &> /dev/null
+      fi
+    '';
+    zsh.profileExtra = ''
+      if [ "$(tty)" = "/dev/tty1" ]; then
+        exec Hyprland &> /dev/null
+      fi
+    '';
+  };
 
-  #   home.packages = with pkgs; [
-  #     inputs.hyprwm-contrib.packages.${system}.grimblast
-  #     swaybg
-  #     swayidle
-  #     # TODO
-  #     # inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland
-  #   ];
+  home.packages = with pkgs; [
+    inputs.hyprwm-contrib.packages.${system}.grimblast
+    swaybg
+    swayidle
+    # TODO
+    # inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland
+  ];
 
-#   programs.waybar.package = pkgs.waybar.overrideAttrs (oa: {
-#     mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
-#   });
+  programs.waybar.package = pkgs.waybar.overrideAttrs (oa: {
+    mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
+  });
 
   wayland.windowManager.hyprland = {
     enable = true;
