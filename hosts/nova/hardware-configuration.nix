@@ -61,6 +61,7 @@
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     bluetooth.enable = true;
+    opengl.enable = true;
     opengl.driSupport32Bit = true; # Required for Steam
     pulseaudio.enable = false;
   };

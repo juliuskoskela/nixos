@@ -9,8 +9,8 @@ in {
   imports = [
     ./hardware-configuration.nix
     (import "${inputs.home-manager}/nixos")
-    ../../kven/programs/gnome
-    ../../users/juliuskoskela
+    # inputs.hyprland.nixosModules.default
+    # inputs.kven.programs.gnome
   ];
 
   system.stateVersion = inputs.stateVersion;
@@ -26,8 +26,14 @@ in {
   };
 
   services = {
+    xserver = {
+      enable = true;
+      displayManager.gdm = {
+        enable = true;
+        wayland = true;
+      };
+    };
     blueman.enable = true;
-    # xserver = import ../../programs/desktop/gnome.nix {inherit config pkgs;};
     printing.enable = true;
     openssh.enable = true;
     pipewire = {
@@ -60,6 +66,7 @@ in {
   };
 
   programs.dconf.enable = true;
+  programs.hyprland.enable = true;
   sound.enable = true;
   security.rtkit.enable = true;
   environment = {

@@ -6,9 +6,9 @@
   inherit (sessionVariables) TERMINAL BROWSER EDITOR;
 in ''
   general {
-    gaps_in=15
-    gaps_out=20
-    border_size=2.7
+    gaps_in=5
+    gaps_out=10
+    border_size=1.5
     col.active_border=0xff${colorScheme.colors.base0C}
     col.inactive_border=0xff${colorScheme.colors.base02}
     col.group_border_active=0xff${colorScheme.colors.base0B}
@@ -20,7 +20,7 @@ in ''
     active_opacity=0.94
     inactive_opacity=0.84
     fullscreen_opacity=1.0
-    rounding=5
+    rounding=3
     blur=true
     blur_size=5
     blur_passes=3
@@ -63,22 +63,22 @@ in ''
   }
 
   input {
-    kb_layout=br,us
+    kb_layout=us
     touchpad {
       disable_while_typing=false
     }
   }
 
   # Passthrough mode (e.g. for VNC)
-  bind=SUPER,P,submap,passthrough
+  bind = SUPER,P,submap,passthrough
   submap=passthrough
-  bind=SUPER,P,submap,reset
+  bind = SUPER,P,submap,reset
   submap=reset
 
 
   # Startup
   exec-once=waybar
-  exec=swaybg -c ${colorScheme.colors.base00}
+  exec-once=swaybg -i ~/Pictures/wallpapers/dark-valley.jpg
   exec-once=mako
   exec-once=swayidle -w
 
@@ -87,167 +87,170 @@ in ''
   bindm=SUPER,mouse:273,resizewindow
 
   # Program bindings
-  bind=SUPER,Return,exec,${TERMINAL}
-  bind=SUPER,w,exec,makoctl dismiss
-  bind=SUPER,v,exec,${TERMINAL} $SHELL -ic ${EDITOR}
-  bind=SUPER,b,exec,${BROWSER}
+  bind = SUPER,Return,exec,${TERMINAL} -e zsh
+  bind = SUPER,b,exec,${BROWSER}
 
-  bind=SUPER,x,exec,wofi -S drun -x 10 -y 10 -W 25% -H 60%
-  bind=SUPER,d,exec,wofi -S run
-  bind=,Scroll_Lock,exec,pass-wofi # fn+k
-  bind=,XF86Calculator,exec,pass-wofi # fn+f12
+  bind = SUPER,x,exec,wofi -S drun -x 10 -y 10 -W 25% -H 60%
+  bind = SUPER,d,exec,wofi -S run
+  bind = ,Scroll_Lock,exec,pass-wofi # fn+k
+  bind = ,XF86Calculator,exec,pass-wofi # fn+f12
 
   # Toggle waybar
-  bind=,XF86Tools,exec,pkill -USR1 waybar # profile button
+  bind = ,XF86Tools,exec,pkill -USR1 waybar # profile button
 
   # Lock screen
-  bind=,XF86Launch5,exec,swaylock -S
-  bind=,XF86Launch4,exec,swaylock -S
-  bind=SUPER,backspace,exec,swaylock -S
+  bind = ,XF86Launch5,exec,swaylock -S
+  bind = ,XF86Launch4,exec,swaylock -S
+  bind = SUPER,backspace,exec,swaylock -S
 
   # Screenshots
-  bind=,Print,exec,grimblast --notify copy output
-  bind=SHIFT,Print,exec,grimblast --notify copy active
-  bind=CONTROL,Print,exec,grimblast --notify copy screen
-  bind=SUPER,Print,exec,grimblast --notify copy window
-  bind=ALT,Print,exec,grimblast --notify copy area
+  bind = ,Print,exec,grimblast --notify copy output
+  bind = SHIFT,Print,exec,grimblast --notify copy active
+  bind = CONTROL,Print,exec,grimblast --notify copy screen
+  bind = SUPER,Print,exec,grimblast --notify copy window
+  bind = ALT,Print,exec,grimblast --notify copy area
 
   # Keyboard controls (brightness, media, sound, etc)
-  bind=,XF86MonBrightnessUp,exec,light -A 10
-  bind=,XF86MonBrightnessDown,exec,light -U 10
+  bind = ,XF86MonBrightnessUp,exec,light -A 10
+  bind = ,XF86MonBrightnessDown,exec,light -U 10
 
-  bind=,XF86AudioNext,exec,playerctl next
-  bind=,XF86AudioPrev,exec,playerctl previous
-  bind=,XF86AudioPlay,exec,playerctl play-pause
-  bind=,XF86AudioStop,exec,playerctl stop
-  bind=ALT,XF86AudioNext,exec,playerctld shift
-  bind=ALT,XF86AudioPrev,exec,playerctld unshift
-  bind=ALT,XF86AudioPlay,exec,systemctl --user restart playerctld
+  bind = ,XF86AudioNext,exec,playerctl next
+  bind = ,XF86AudioPrev,exec,playerctl previous
+  bind = ,XF86AudioPlay,exec,playerctl play-pause
+  bind = ,XF86AudioStop,exec,playerctl stop
+  bind = ALT,XF86AudioNext,exec,playerctld shift
+  bind = ALT,XF86AudioPrev,exec,playerctld unshift
+  bind = ALT,XF86AudioPlay,exec,systemctl --user restart playerctld
 
-  bind=,XF86AudioRaiseVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ +5%
-  bind=,XF86AudioLowerVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ -5%
-  bind=,XF86AudioMute,exec,pactl set-sink-mute @DEFAULT_SINK@ toggle
+  bind = ,XF86AudioRaiseVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ +5%
+  bind = ,XF86AudioLowerVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ -5%
+  bind = ,XF86AudioMute,exec,pactl set-sink-mute @DEFAULT_SINK@ toggle
 
-  bind=SHIFT,XF86AudioMute,exec,pactl set-source-mute @DEFAULT_SOURCE@ toggle
-  bind=,XF86AudioMicMute,exec,pactl set-source-mute @DEFAULT_SOURCE@ toggle
+  bind = SHIFT,XF86AudioMute,exec,pactl set-source-mute @DEFAULT_SOURCE@ toggle
+  bind = ,XF86AudioMicMute,exec,pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 
   # Window manager controls
-  bind=SUPERSHIFT,q,killactive
-  bind=SUPERSHIFT,e,exit
+  bind = SUPER SHIFT,q,killactive
+  bind = SUPER SHIFT,e,exit
 
-  bind=SUPER,s,togglesplit
-  bind=SUPER,f,fullscreen,1
-  bind=SUPERSHIFT,f,fullscreen,0
-  bind=SUPERSHIFT,space,togglefloating
+  bind = SUPER,s,togglesplit
+  bind = SUPER,f,fullscreen,1
+  bind = SUPER SHIFT,f,fullscreen,0
+  bind = SUPER SHIFT,space,togglefloating
 
-  bind=SUPER,minus,splitratio,-0.25
-  bind=SUPERSHIFT,minus,splitratio,-0.3333333
+  bind = SUPER,minus,splitratio,-0.25
+  bind = SUPER SHIFT,minus,splitratio,-0.3333333
 
-  bind=SUPER,equal,splitratio,0.25
-  bind=SUPERSHIFT,equal,splitratio,0.3333333
+  bind = SUPER,equal,splitratio,0.25
+  bind = SUPER SHIFT,equal,splitratio,0.3333333
 
-  bind=SUPER,g,togglegroup
-  bind=SUPER,apostrophe,changegroupactive,f
-  bind=SUPERSHIFT,apostrophe,changegroupactive,b
+  bind = SUPER,g,togglegroup
+  bind = SUPER,apostrophe,changegroupactive,f
+  bind = SUPER SHIFT,apostrophe,changegroupactive,b
 
-  bind=SUPER,left,movefocus,l
-  bind=SUPER,right,movefocus,r
-  bind=SUPER,up,movefocus,u
-  bind=SUPER,down,movefocus,d
-  bind=SUPER,h,movefocus,l
-  bind=SUPER,l,movefocus,r
-  bind=SUPER,k,movefocus,u
-  bind=SUPER,j,movefocus,d
+  bind = SUPER,left,movefocus,l
+  bind = SUPER,right,movefocus,r
+  bind = SUPER,up,movefocus,u
+  bind = SUPER,down,movefocus,d
+  bind = SUPER,h,movefocus,l
+  bind = SUPER,l,movefocus,r
+  bind = SUPER,k,movefocus,u
+  bind = SUPER,j,movefocus,d
 
-  bind=SUPERSHIFT,left,swapwindow,l
-  bind=SUPERSHIFT,right,swapwindow,r
-  bind=SUPERSHIFT,up,swapwindow,u
-  bind=SUPERSHIFT,down,swapwindow,d
-  bind=SUPERSHIFT,h,swapwindow,l
-  bind=SUPERSHIFT,l,swapwindow,r
-  bind=SUPERSHIFT,k,swapwindow,u
-  bind=SUPERSHIFT,j,swapwindow,d
+  bind = SUPER SHIFT,left,swapwindow,l
+  bind = SUPER SHIFT,right,swapwindow,r
+  bind = SUPER SHIFT,up,swapwindow,u
+  bind = SUPER SHIFT,down,swapwindow,d
+  bind = SUPER SHIFT,h,swapwindow,l
+  bind = SUPER SHIFT,l,swapwindow,r
+  bind = SUPER SHIFT,k,swapwindow,u
+  bind = SUPER SHIFT,j,swapwindow,d
 
-  bind=SUPERCONTROL,left,focusmonitor,l
-  bind=SUPERCONTROL,right,focusmonitor,r
-  bind=SUPERCONTROL,up,focusmonitor,u
-  bind=SUPERCONTROL,down,focusmonitor,d
-  bind=SUPERCONTROL,h,focusmonitor,l
-  bind=SUPERCONTROL,l,focusmonitor,r
-  bind=SUPERCONTROL,k,focusmonitor,u
-  bind=SUPERCONTROL,j,focusmonitor,d
+  bind = SUPER CONTROL SHIFT, right, resizeactive, 30 0
+  bind = SUPER CONTROL SHIFT, left, resizeactive, -30 0
+  bind = SUPER CONTROL SHIFT, up, resizeactive, 0 -30
+  bind = SUPER CONTROL SHIFT, down, resizeactive, 0 30
 
-  bind=SUPERCONTROL,1,focusmonitor,DP-1
-  bind=SUPERCONTROL,2,focusmonitor,DP-2
-  bind=SUPERCONTROL,3,focusmonitor,DP-3
+  bind= SUPER ALT SHIFT,left,movewindow,mon:l
+  bind= SUPER ALT SHIFT,right,movewindow,mon:r
+  bind= SUPER ALT SHIFT,up,movewindow,mon:u
+  bind= SUPER ALT SHIFT,down,movewindow,mon:d
+  bind= SUPER ALT SHIFT,h,movewindow,mon:l
+  bind= SUPER ALT SHIFT,l,movewindow,mon:r
+  bind= SUPER ALT SHIFT,k,movewindow,mon:u
+  bind= SUPER ALT SHIFT,j,movewindow,mon:d
 
-  bind=SUPERCONTROLSHIFT,left,movewindow,mon:l
-  bind=SUPERCONTROLSHIFT,right,movewindow,mon:r
-  bind=SUPERCONTROLSHIFT,up,movewindow,mon:u
-  bind=SUPERCONTROLSHIFT,down,movewindow,mon:d
-  bind=SUPERCONTROLSHIFT,h,movewindow,mon:l
-  bind=SUPERCONTROLSHIFT,l,movewindow,mon:r
-  bind=SUPERCONTROLSHIFT,k,movewindow,mon:u
-  bind=SUPERCONTROLSHIFT,j,movewindow,mon:d
+  bind = SUPER CONTROL,left,focusmonitor,l
+  bind = SUPER CONTROL,right,focusmonitor,r
+  bind = SUPER CONTROL,up,focusmonitor,u
+  bind = SUPER CONTROL,down,focusmonitor,d
+  bind = SUPER CONTROL,h,focusmonitor,l
+  bind = SUPER CONTROL,l,focusmonitor,r
+  bind = SUPER CONTROL,k,focusmonitor,u
+  bind = SUPER CONTROL,j,focusmonitor,d
 
-  bind=SUPERALT,left,movecurrentworkspacetomonitor,l
-  bind=SUPERALT,right,movecurrentworkspacetomonitor,r
-  bind=SUPERALT,up,movecurrentworkspacetomonitor,u
-  bind=SUPERALT,down,movecurrentworkspacetomonitor,d
-  bind=SUPERALT,h,movecurrentworkspacetomonitor,l
-  bind=SUPERALT,l,movecurrentworkspacetomonitor,r
-  bind=SUPERALT,k,movecurrentworkspacetomonitor,u
-  bind=SUPERALT,j,movecurrentworkspacetomonitor,d
+  bind = SUPER CONTROL,1,focusmonitor,DP-1
+  bind = SUPER CONTROL,2,focusmonitor,DP-2
+  bind = SUPER CONTROL,3,focusmonitor,DP-3
 
-  bind=SUPER,u,togglespecialworkspace
-  bind=SUPERSHIFT,u,movetoworkspace,special
+  bind=SUPER ALT,left,movecurrentworkspacetomonitor,l
+  bind=SUPER ALT,right,movecurrentworkspacetomonitor,r
+  bind=SUPER ALT,up,movecurrentworkspacetomonitor,u
+  bind=SUPER ALT,down,movecurrentworkspacetomonitor,d
+  bind=SUPER ALT,h,movecurrentworkspacetomonitor,l
+  bind=SUPER ALT,l,movecurrentworkspacetomonitor,r
+  bind=SUPER ALT,k,movecurrentworkspacetomonitor,u
+  bind=SUPER ALT,j,movecurrentworkspacetomonitor,d
 
-  bind=SUPER,1,workspace,01
-  bind=SUPER,2,workspace,02
-  bind=SUPER,3,workspace,03
-  bind=SUPER,4,workspace,04
-  bind=SUPER,5,workspace,05
-  bind=SUPER,6,workspace,06
-  bind=SUPER,7,workspace,07
-  bind=SUPER,8,workspace,08
-  bind=SUPER,9,workspace,09
-  bind=SUPER,0,workspace,10
-  bind=SUPER,f1,workspace,11
-  bind=SUPER,f2,workspace,12
-  bind=SUPER,f3,workspace,13
-  bind=SUPER,f4,workspace,14
-  bind=SUPER,f5,workspace,15
-  bind=SUPER,f6,workspace,16
-  bind=SUPER,f7,workspace,17
-  bind=SUPER,f8,workspace,18
-  bind=SUPER,f9,workspace,19
-  bind=SUPER,f10,workspace,20
-  bind=SUPER,f11,workspace,21
-  bind=SUPER,f12,workspace,22
+  bind = SUPER,u,togglespecialworkspace
+  bind = SUPER SHIFT,u,movetoworkspace,special
 
-  bind=SUPERSHIFT,1,movetoworkspacesilent,01
-  bind=SUPERSHIFT,2,movetoworkspacesilent,02
-  bind=SUPERSHIFT,3,movetoworkspacesilent,03
-  bind=SUPERSHIFT,4,movetoworkspacesilent,04
-  bind=SUPERSHIFT,5,movetoworkspacesilent,05
-  bind=SUPERSHIFT,6,movetoworkspacesilent,06
-  bind=SUPERSHIFT,7,movetoworkspacesilent,07
-  bind=SUPERSHIFT,8,movetoworkspacesilent,08
-  bind=SUPERSHIFT,9,movetoworkspacesilent,09
-  bind=SUPERSHIFT,0,movetoworkspacesilent,10
-  bind=SUPERSHIFT,f1,movetoworkspacesilent,11
-  bind=SUPERSHIFT,f2,movetoworkspacesilent,12
-  bind=SUPERSHIFT,f3,movetoworkspacesilent,13
-  bind=SUPERSHIFT,f4,movetoworkspacesilent,14
-  bind=SUPERSHIFT,f5,movetoworkspacesilent,15
-  bind=SUPERSHIFT,f6,movetoworkspacesilent,16
-  bind=SUPERSHIFT,f7,movetoworkspacesilent,17
-  bind=SUPERSHIFT,f8,movetoworkspacesilent,18
-  bind=SUPERSHIFT,f9,movetoworkspacesilent,19
-  bind=SUPERSHIFT,f10,movetoworkspacesilent,20
-  bind=SUPERSHIFT,f11,movetoworkspacesilent,21
-  bind=SUPERSHIFT,f12,movetoworkspacesilent,22
+  bind = SUPER,1,workspace,01
+  bind = SUPER,2,workspace,02
+  bind = SUPER,3,workspace,03
+  bind = SUPER,4,workspace,04
+  bind = SUPER,5,workspace,05
+  bind = SUPER,6,workspace,06
+  bind = SUPER,7,workspace,07
+  bind = SUPER,8,workspace,08
+  bind = SUPER,9,workspace,09
+  bind = SUPER,0,workspace,10
+  bind = SUPER,f1,workspace,11
+  bind = SUPER,f2,workspace,12
+  bind = SUPER,f3,workspace,13
+  bind = SUPER,f4,workspace,14
+  bind = SUPER,f5,workspace,15
+  bind = SUPER,f6,workspace,16
+  bind = SUPER,f7,workspace,17
+  bind = SUPER,f8,workspace,18
+  bind = SUPER,f9,workspace,19
+  bind = SUPER,f10,workspace,20
+  bind = SUPER,f11,workspace,21
+  bind = SUPER,f12,workspace,22
+
+  bind = SUPER SHIFT,1,movetoworkspacesilent,01
+  bind = SUPER SHIFT,2,movetoworkspacesilent,02
+  bind = SUPER SHIFT,3,movetoworkspacesilent,03
+  bind = SUPER SHIFT,4,movetoworkspacesilent,04
+  bind = SUPER SHIFT,5,movetoworkspacesilent,05
+  bind = SUPER SHIFT,6,movetoworkspacesilent,06
+  bind = SUPER SHIFT,7,movetoworkspacesilent,07
+  bind = SUPER SHIFT,8,movetoworkspacesilent,08
+  bind = SUPER SHIFT,9,movetoworkspacesilent,09
+  bind = SUPER SHIFT,0,movetoworkspacesilent,10
+  bind = SUPER SHIFT,f1,movetoworkspacesilent,11
+  bind = SUPER SHIFT,f2,movetoworkspacesilent,12
+  bind = SUPER SHIFT,f3,movetoworkspacesilent,13
+  bind = SUPER SHIFT,f4,movetoworkspacesilent,14
+  bind = SUPER SHIFT,f5,movetoworkspacesilent,15
+  bind = SUPER SHIFT,f6,movetoworkspacesilent,16
+  bind = SUPER SHIFT,f7,movetoworkspacesilent,17
+  bind = SUPER SHIFT,f8,movetoworkspacesilent,18
+  bind = SUPER SHIFT,f9,movetoworkspacesilent,19
+  bind = SUPER SHIFT,f10,movetoworkspacesilent,20
+  bind = SUPER SHIFT,f11,movetoworkspacesilent,21
+  bind = SUPER SHIFT,f12,movetoworkspacesilent,22
 
   blurls=waybar
 ''

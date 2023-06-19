@@ -86,8 +86,10 @@
     # different NixOS system configurations that can be built using the
     # mkNixos function from the lib library.
     nixosConfigurations = {
-      nova = inputs.kven.mkNixos [./hosts/nova];
-      #   luna = inputs.kven.mkNixos [./hosts/luna];
+      nova = inputs.kven.mkNixos [
+        ./hosts/nova
+        ./users/juliuskoskela
+      ];
     };
 
     devShells = inputs.kven.forEachPkgs (pkgs: import ./shell.nix {inherit pkgs;});

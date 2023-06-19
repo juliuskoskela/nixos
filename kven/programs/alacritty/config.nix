@@ -1,5 +1,5 @@
 # kven/programs/alacritty/config.nix
-{
+colorScheme: {
   enable = true;
   settings = {
     font = {
@@ -22,28 +22,18 @@
     };
     colors = {
       primary = {
-        background = "#282c34";
-        foreground = "#abb2bf";
+        background = "#${colorScheme.colors.base00}";
+        foreground = "#${colorScheme.colors.base05}";
       };
       normal = {
-        black = "#282c34";
-        red = "#e06c75";
-        green = "#98c379";
-        yellow = "#e5c07b";
-        blue = "#61afef";
-        magenta = "#c678dd";
-        cyan = "#56b6c2";
-        white = "#abb2bf";
-      };
-      bright = {
-        black = "#5c6370";
-        red = "#e06c75";
-        green = "#98c379";
-        yellow = "#e5c07b";
-        blue = "#61afef";
-        magenta = "#c678dd";
-        cyan = "#56b6c2";
-        white = "#abb2bf";
+        black = "#${colorScheme.colors.base00}";
+        red = "#${colorScheme.colors.base08}";
+        green = "#${colorScheme.colors.base0B}";
+        yellow = "#${colorScheme.colors.base0D}";
+        blue = "#${colorScheme.colors.base0E}";
+        magenta = "#${colorScheme.colors.base0C}";
+        cyan = "#${colorScheme.colors.base0A}";
+        white = "#${colorScheme.colors.base05}";
       };
     };
   };

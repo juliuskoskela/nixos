@@ -7,6 +7,7 @@
     alacritty = import ./programs/alacritty;
     nixvim = import ./programs/nixvim;
     gnome = import ./programs/gnome;
+    plasma = import ./programs/plasma;
     hyprland = import ./programs/hyprland;
   };
   # A function that generates attributes for each system architecture.
@@ -70,9 +71,9 @@
 
       imports =
         [
+          (inputs.kven.programs.hyprland {inherit inputs pkgs sessionVariables colorScheme;})
           inputs.nixvim.homeManagerModules.nixvim
           inputs.nix-colors.homeManagerModules.default
-          (inputs.kven.programs.hyprland {inherit inputs pkgs sessionVariables colorScheme;})
         ]
         ++ userImports;
 
@@ -87,11 +88,6 @@
       };
     };
   };
-
-  # mkHome = modules: pkgs: home-manager.lib.homeManagerConfiguration {
-  #     inherit modules pkgs;
-  #     extraSpecialArgs = { inherit inputs outputs; };
-  #   };
 
   mkGitUser = gitConfig: {
     enable = true;
