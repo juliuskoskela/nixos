@@ -22,7 +22,7 @@ in {
 
   # Setup keyfile
   boot.initrd.secrets = {
-	"/crypto_keyfile.bin" = null;
+    "/crypto_keyfile.bin" = null;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -84,6 +84,9 @@ in {
     };
   };
 
+  programs.hyprland.xwayland.hidpi = false;
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.login.enableGnomeKeyring = true;
   programs.dconf.enable = true;
   programs.hyprland.enable = true;
   sound.enable = true;
