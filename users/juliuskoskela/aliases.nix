@@ -12,7 +12,7 @@
 
   # Shortcuts
   repos = "cd ~/Repos";
-  configs = "cd ~/Repos/nixos";
+  nixos = "cd ~/Repos/nixos";
 
   mail = "protonmail-bridge &";
 }

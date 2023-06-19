@@ -81,6 +81,8 @@ in ''
   exec-once=swaybg -i ~/Pictures/wallpapers/dark-valley.jpg
   exec-once=mako
   exec-once=swayidle -w
+  exec-once = wl-paste --type text --watch cliphist store
+  exec-once = wl-paste --type image --watch cliphist store
 
   # Mouse binding
   bindm=SUPER,mouse:272,movewindow
@@ -94,6 +96,7 @@ in ''
   bind = SUPER,d,exec,wofi -S run
   bind = ,Scroll_Lock,exec,pass-wofi # fn+k
   bind = ,XF86Calculator,exec,pass-wofi # fn+f12
+  bind = SUPER, V, exec, cliphist list | wofi -dmenu | cliphist decode | wl-copy
 
   # Toggle waybar
   bind = ,XF86Tools,exec,pkill -USR1 waybar # profile button
