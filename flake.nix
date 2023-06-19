@@ -91,6 +91,11 @@
         ./hosts/nova
         ./users/juliuskoskela
       ];
+
+      luna = inputs.kven.mkNixos [
+        ./hosts/luna
+        ./users/juliuskoskela-luna
+      ];
     };
 
     devShells = inputs.kven.forEachPkgs (pkgs: import ./shell.nix {inherit pkgs;});
