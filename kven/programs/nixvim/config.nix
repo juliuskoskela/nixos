@@ -1,7 +1,7 @@
 # kven/prgrams/nixvim/config.nix
 pkgs: {
   enable = true;
-#   colorscheme = "ayu";
+  #   colorscheme = "ayu";
   colorschemes.tokyonight.enable = true;
   clipboard.providers.wl-copy.enable = true;
   extraPlugins = with pkgs.vimPlugins; [
@@ -14,9 +14,9 @@ pkgs: {
   };
 
   maps = {
-	normal."<C-f>" = {
-		action = "<cmd>NvimTreeToggle<cr>";
-	};
+    normal."<C-f>" = {
+      action = "<cmd>NvimTreeToggle<cr>";
+    };
   };
   plugins = {
     copilot.enable = true;
@@ -25,7 +25,6 @@ pkgs: {
       enable = true;
       servers = {
         rust-analyzer.enable = true;
-        # nixd.enable = true;
       };
     };
     # barbar.enable = true;
@@ -34,11 +33,11 @@ pkgs: {
   };
 
   extraConfigLua = ''
-    vim.g.copilot_no_tab_map = true
-    vim.g.copilot_assume_mapped = true
-    vim.api.nvim_set_keymap("i", "<C-e>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
-	vim.cmd(":highlight SignColumn guibg=NONE")
-	vim.cmd(":hi Normal guibg=NONE ctermbg=NONE")
-	vim.cmd[[hi NvimTreeNormal guibg=NONE ctermbg=NONE]]
+       vim.g.copilot_no_tab_map = true
+       vim.g.copilot_assume_mapped = true
+       vim.api.nvim_set_keymap("i", "<C-e>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+    vim.cmd(":highlight SignColumn guibg=NONE")
+    vim.cmd(":hi Normal guibg=NONE ctermbg=NONE")
+    vim.cmd[[hi NvimTreeNormal guibg=NONE ctermbg=NONE]]
   '';
 }

@@ -81,6 +81,7 @@
         stateVersion = "23.05";
         kven = import ./kven {inherit inputs;};
       };
+    users = import ./users;
   in {
     # The nixosConfigurations attribute in the flake.nix file defines
     # different NixOS system configurations that can be built using the

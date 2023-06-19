@@ -5,7 +5,7 @@
   ...
 }: let
   shellAliases = import ./aliases.nix;
-  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
+  colorScheme = inputs.nix-colors.colorSchemes.tokyo-night-dark;
   sessionVariables = import ./environment.nix;
   extraPackages = import ./packages.nix pkgs;
 in

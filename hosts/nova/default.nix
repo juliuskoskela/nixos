@@ -69,6 +69,13 @@ in {
   programs.hyprland.enable = true;
   sound.enable = true;
   security.rtkit.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.login.enableGnomeKeyring = true;
+# security.pam.services."gdm".enableKwallet = true;
+#   security.pam.services.kwallet = {
+#     name = "kwallet";
+#     enableKwallet = true;
+#   };
   environment = {
     systemPackages = with pkgs; [
       # neovim
