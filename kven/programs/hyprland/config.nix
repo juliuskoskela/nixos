@@ -63,7 +63,7 @@ in ''
   }
 
   input {
-    kb_layout=us
+    kb_layout=us,fi
     touchpad {
       disable_while_typing=false
     }

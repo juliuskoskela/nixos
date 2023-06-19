@@ -86,60 +86,68 @@
 
     settings = [
       {
-        "layer" = "top";
-        "position" = "top";
-        "height" = 24;
-        "spacing" = 4;
-        "modules-left" = [
+        layer = "top";
+        position = "top";
+        height = 24;
+        spacing = 4;
+        modules-left = [
           "wlr/workspaces"
           "wlr/taskbar"
           "network"
         ];
-        "modules-center" = [
+        modules-center = [
           "hyprland/window"
         ];
-        "modules-right" = [
+        modules-right = [
           "tray"
           "custom/weather"
           "clock"
           "battery"
+          "hyprland/language"
         ];
+
         "network" = {
-          "format-wifi" = "{ifname}->{essid}({signalStrength}%)->{ipaddr}";
+          format-wifi = "{ifname}->{essid}({signalStrength}%)->{ipaddr}";
         };
         "wlr/taskbar" = {
-          "on-click" = "activate";
-          "on-click-middle" = "close";
-          "ignore-list" = [
+          on-click = "activate";
+          on-click-middle = "close";
+          ignore-list = [
             "foot"
           ];
         };
         "wlr/workspaces" = {
-          "on-click" = "activate";
-          "on-scroll-up" = "hyprctl dispatch workspace e-1";
-          "on-scroll-down" = "hyprctl dispatch workspace e+1";
+          on-click = "activate";
+          on-scroll-up = "hyprctl dispatch workspace e-1";
+          on-scroll-down = "hyprctl dispatch workspace e+1";
         };
         "hyprland/window" = {
-          "max-length" = 128;
+          max-length = 128;
         };
         "clock" = {
-          "format" = "{=%c}";
-          "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          format = "{:%c}";
+          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         };
         "tray" = {
-          "spacing" = 4;
+          spacing = 4;
         };
         "custom/weather" = {
-          "exec" = "bash ~/.config/waybar/wittr.sh";
-          "return-type" = "json";
-          "format" = "{}";
-          "tooltip" = true;
-          "interval" = 900;
+          exec = ''
+            #!/usr/bin/sh
+            req=$(curl -s wttr.in/?format="%t|%l+(%c%f)+%h,+%C")
+            bar=$(echo $req | awk -F "|" '{print $1}')
+            tooltip=$(echo $req | awk -F "|" '{print $2}')
+            echo "{\"text\":\"$bar\", \"tooltip\":\"$tooltip\"}"
+            '';
+          return-type = "json";
+          format = "{}";
+          tooltip = true;
+          interval = 900;
         };
         "hyprland/language" = {
-          "format-fi" = "[fi]";
-          "format-en" = "[us]";
-          "on-click" = "hyprctl switchxkblayout at-translated-set-2-keyboard next";
+          format-fi = "[fi]";
+          format-en = "[us]";
+          on-click = "hyprctl switchxkblayout at-translated-set-2-keyboard next";
         };
       }
     ];

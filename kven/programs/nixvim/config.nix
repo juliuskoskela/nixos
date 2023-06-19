@@ -32,7 +32,7 @@ pkgs: {
       enable = true;
       servers = {
         rust-analyzer.enable = true;
-        rnix-lsp.enable = true;
+        # rnix-lsp.enable = true;
         lua-ls.enable = true;
         ltex.enable = true;
         clangd.enable = true;
