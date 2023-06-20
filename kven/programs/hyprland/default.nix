@@ -37,21 +37,21 @@
     style = ''
       ${builtins.readFile "${pkgs.waybar}/etc/xdg/waybar/style.css"}
       @define-color background-darker rgba(30, 31, 41, 230);
-      @define-color background #282a36;
-      @define-color selection #44475a;
-      @define-color foreground #f8f8f2;
-      @define-color comment #6272a4;
-      @define-color cyan #8be9fd;
-      @define-color green #50fa7b;
-      @define-color orange #ffb86c;
-      @define-color pink #ff79c6;
-      @define-color purple #bd93f9;
-      @define-color red #ff5555;
-      @define-color yellow #f1fa8c;
+      @define-color background #${colorScheme.colors.base00};
+      @define-color selection #${colorScheme.colors.base02};
+      @define-color foreground #${colorScheme.colors.base05};
+      @define-color comment #${colorScheme.colors.base03};
+      @define-color cyan #${colorScheme.colors.base08};
+      @define-color green #${colorScheme.colors.base09};
+      @define-color orange #${colorScheme.colors.base0A};
+      @define-color pink #${colorScheme.colors.base0B};
+      @define-color purple #${colorScheme.colors.base0D};
+      @define-color red #${colorScheme.colors.base0D};
+      @define-color yellow #${colorScheme.colors.base0E};
       * {
           border: none;
           border-radius: 0;
-          font-family: Iosevka;
+          font-family: JetBrains Mono Nerd Font;
           font-size: 11pt;
           min-height: 0;
       }
@@ -147,7 +147,10 @@
         "hyprland/language" = {
           format-fi = "[fi]";
           format-en = "[us]";
-          on-click = "hyprctl switchxkblayout at-translated-set-2-keyboard next";
+
+		  # !TODO Figure out on click switch, this command doesn't work but
+		  # hyprctl keyword input:kb_layout fi does.
+        #   on-click = "hyprctl switchxkblayout at-translated-set-2-keyboard next";
         };
       }
     ];

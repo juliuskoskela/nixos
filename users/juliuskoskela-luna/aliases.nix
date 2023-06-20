@@ -1,4 +1,8 @@
 {
+  # Keyboard layout
+  fi = "hyprctl keyword input:kb_layout fi";
+  en = "hyprctl keyword input:kb_layout us";
+
   # Nix commands
   rebuild = "sudo nixos-rebuild --flake '.#'$(hostname) switch --impure";
 
