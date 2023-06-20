@@ -79,7 +79,7 @@
       flake-inputs
       // {
         stateVersion = "23.05";
-        kven = import ./kven {inherit inputs;};
+        common = import ./common {inherit inputs;};
       };
     users = import ./users;
   in {
@@ -87,18 +87,18 @@
     # different NixOS system configurations that can be built using the
     # mkNixos function from the lib library.
     nixosConfigurations = {
-      nova = inputs.kven.mkNixos [
+      nova = inputs.common.mkNixos [
         ./hosts/nova
         ./users/juliuskoskela
       ] "x86_64-linux";
 
-      #   luna = inputs.kven.mkNixos [
+      #   luna = inputs.common.mkNixos [
       #     ./hosts/luna
       #     ./users/juliuskoskela-luna
       #   ];
     };
 
-    devShells = inputs.kven.forEachPkgs (pkgs: import ./shell.nix {inherit pkgs;});
-    formatter = inputs.kven.forEachPkgs (pkgs: pkgs.alejandra);
+    devShells = inputs.common.forEachPkgs (pkgs: import ./shell.nix {inherit pkgs;});
+    formatter = inputs.common.forEachPkgs (pkgs: pkgs.alejandra);
   };
 }

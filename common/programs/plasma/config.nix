@@ -1,4 +1,4 @@
-# kven/programs/wayland/config.nix
+# common/programs/wayland/config.nix
 {
   enable = true;
   desktopManager.

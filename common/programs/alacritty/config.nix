@@ -1,4 +1,4 @@
-# kven/programs/alacritty/config.nix
+# common/programs/alacritty/config.nix
 colorScheme: {
   enable = true;
   settings = {

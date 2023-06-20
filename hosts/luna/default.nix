@@ -10,7 +10,7 @@ in {
     ./hardware-configuration.nix
     (import "${inputs.home-manager}/nixos")
     # inputs.hyprland.nixosModules.default
-    # inputs.kven.programs.gnome
+    # inputs.common.programs.gnome
   ];
 
   system.stateVersion = inputs.stateVersion;

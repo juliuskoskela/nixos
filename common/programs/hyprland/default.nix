@@ -1,4 +1,4 @@
-# kven/programs/hyprland/default.nix
+# common/programs/hyprland/default.nix
 {
   inputs,
   pkgs,

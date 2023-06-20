@@ -1,4 +1,4 @@
-# kven/programs/gnome/default.nix
+# common/programs/gnome/default.nix
 {
   pkgs,
   config,

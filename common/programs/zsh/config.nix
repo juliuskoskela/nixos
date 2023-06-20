@@ -1,4 +1,4 @@
-# kven/programs/zsh/config.nix
+# common/programs/zsh/config.nix
 {
   pkgs,
   shellAliases,

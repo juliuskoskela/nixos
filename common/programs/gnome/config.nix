@@ -1,4 +1,4 @@
-# kven/programs/gnome/config.nix
+# common/programs/gnome/config.nix
 {pkgs, ...}: {
   enable = true;
   displayManager.gdm.enable = true;

@@ -73,8 +73,8 @@
 
       imports =
         [
-          (inputs.kven.programs.hyprland {inherit inputs pkgs sessionVariables colorScheme;})
-          (inputs.kven.programs.waybar {inherit system inputs pkgs sessionVariables colorScheme;})
+          (inputs.common.programs.hyprland {inherit inputs pkgs sessionVariables colorScheme;})
+          (inputs.common.programs.waybar {inherit system inputs pkgs sessionVariables colorScheme;})
           inputs.nixvim.homeManagerModules.nixvim
           inputs.nix-colors.homeManagerModules.default
         ]

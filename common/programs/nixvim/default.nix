@@ -1,4 +1,4 @@
-# kven/prgrams/nixvim/default.nix
+# common/prgrams/nixvim/default.nix
 {pkgs, ...}: {
   programs.nixvim = import ./config.nix pkgs;
 }

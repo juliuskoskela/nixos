@@ -9,7 +9,7 @@
   sessionVariables = import ./environment.nix;
   extraPackages = import ./packages.nix pkgs;
 in
-  inputs.kven.mkUser {
+  inputs.common.mkUser {
     inherit inputs pkgs shellAliases colorScheme sessionVariables extraPackages;
 
     name = "juliuskoskela";
@@ -21,8 +21,8 @@ in
     };
 
     userImports = [
-      (inputs.kven.programs.zsh {inherit pkgs shellAliases;})
-      inputs.kven.programs.nixvim
-      (inputs.kven.programs.alacritty {inherit colorScheme;})
+      (inputs.common.programs.zsh {inherit pkgs shellAliases;})
+      inputs.common.programs.nixvim
+      (inputs.common.programs.alacritty {inherit colorScheme;})
     ];
   }

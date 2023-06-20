@@ -1,4 +1,4 @@
-# kven/programs/wayland/default.nix
+# common/programs/wayland/default.nix
 {
   services.xserver = {
     enable = true;
