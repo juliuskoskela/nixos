@@ -9,6 +9,7 @@
     gnome = import ./programs/gnome;
     plasma = import ./programs/plasma;
     hyprland = import ./programs/hyprland;
+    waybar = import ./programs/waybar;
   };
   # A function that generates attributes for each system architecture.
   # It takes a list of system architectures as input and returns a set of attributes
@@ -23,15 +24,16 @@
   # A function that creates a NixOS host system configuration. It takes a
   # module set as input and returns a NixOS system configuration with the provided
   # module set and additional special arguments.
-  mkNixos = modules:
+  mkNixos = modules: system:
     inputs.nixpkgs.lib.nixosSystem {
       inherit modules;
-      specialArgs = {inherit inputs;};
+      specialArgs = {inherit inputs system;};
     };
 
   mkUser = {
     inputs,
     pkgs,
+    system,
     name,
     description,
     gitConfig,
@@ -72,6 +74,7 @@
       imports =
         [
           (inputs.kven.programs.hyprland {inherit inputs pkgs sessionVariables colorScheme;})
+          (inputs.kven.programs.waybar {inherit system inputs pkgs sessionVariables colorScheme;})
           inputs.nixvim.homeManagerModules.nixvim
           inputs.nix-colors.homeManagerModules.default
         ]

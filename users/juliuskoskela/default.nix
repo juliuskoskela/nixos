@@ -2,6 +2,7 @@
 {
   inputs,
   pkgs,
+  system,
   ...
 }: let
   shellAliases = import ./aliases.nix;
@@ -10,7 +11,15 @@
   extraPackages = import ./packages.nix pkgs;
 in
   inputs.kven.mkUser {
-    inherit inputs pkgs shellAliases colorScheme sessionVariables extraPackages;
+    inherit
+      inputs
+      pkgs
+      system
+      shellAliases
+      colorScheme
+      sessionVariables
+      extraPackages
+      ;
 
     name = "juliuskoskela";
     description = "Julius Koskela's personal user.";

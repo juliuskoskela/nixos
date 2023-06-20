@@ -9,7 +9,7 @@ in ''
     gaps_in=5
     gaps_out=10
     border_size=1.5
-    col.active_border=0xff${colorScheme.colors.base0C}
+    col.active_border=0xff${colorScheme.colors.base04}
     col.inactive_border=0xff${colorScheme.colors.base02}
     col.group_border_active=0xff${colorScheme.colors.base0B}
     col.group_border=0xff${colorScheme.colors.base04}

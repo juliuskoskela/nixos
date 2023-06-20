@@ -28,20 +28,24 @@ pkgs: {
   plugins = {
     copilot.enable = true;
     nvim-tree.enable = true;
-    lsp = {
-      enable = true;
-      servers = {
-        rust-analyzer.enable = true;
-        # rnix-lsp.enable = true;
-        lua-ls.enable = true;
-        ltex.enable = true;
-        clangd.enable = true;
-        pylsp.enable = true;
-        hls.enable = true;
-        html.enable = true;
-        bashls.enable = true;
-      };
-    };
+    gitgutter.enable = true;
+    barbar.enable = true;
+    # comment-nvim.enable = true;
+    # dashboard.enable = true;
+    # lsp = {
+    #   enable = true;
+    #   servers = {
+    #     rust-analyzer.enable = true;
+    #     # rnix-lsp.enable = true;
+    #     lua-ls.enable = true;
+    #     ltex.enable = true;
+    #     clangd.enable = true;
+    #     pylsp.enable = true;
+    #     hls.enable = true;
+    #     html.enable = true;
+    #     bashls.enable = true;
+    #   };
+    # };
   };
 
   extraConfigLua = ''

@@ -90,12 +90,12 @@
       nova = inputs.kven.mkNixos [
         ./hosts/nova
         ./users/juliuskoskela
-      ];
+      ] "x86_64-linux";
 
-      luna = inputs.kven.mkNixos [
-        ./hosts/luna
-        ./users/juliuskoskela-luna
-      ];
+      #   luna = inputs.kven.mkNixos [
+      #     ./hosts/luna
+      #     ./users/juliuskoskela-luna
+      #   ];
     };
 
     devShells = inputs.kven.forEachPkgs (pkgs: import ./shell.nix {inherit pkgs;});

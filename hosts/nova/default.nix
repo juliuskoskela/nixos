@@ -77,6 +77,8 @@ in {
   environment = {
     systemPackages = with pkgs; [
       # neovim
+      # vscode-langservers-extracted
+      # keyd
       python3
       nodejs
       wget
