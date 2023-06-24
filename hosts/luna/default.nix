@@ -93,7 +93,7 @@ in {
   security.rtkit.enable = true;
   environment = {
     systemPackages = with pkgs; [
-      # neovim
+      perl
       python3
       nodejs
       wget
@@ -103,6 +103,7 @@ in {
       helix
       efibootmgr
       nixpkgs-fmt
+      ripgrep
     ];
   };
 }

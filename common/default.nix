@@ -30,6 +30,101 @@
       specialArgs = {inherit inputs system;};
     };
 
+  # A function that creates a NixOS host system configuration using Hyprland
+  # on Wayland. It takes a list of packages, a system architecture, a system name,
+  # a state version, a hardware configuration, a boot configuration, a host configuration,
+  # a list of host packages, and a list of extra packages as input and returns a NixOS
+  # system configuration.
+  mkHyprHost = {
+    pkgs,
+    name,
+    system,
+    stateVersion,
+    timeZone,
+    localeSettings,
+    home-manager,
+    hardwareConfig,
+    bootConfig,
+    hostConfig ? {},
+    hostPackages ? [],
+    ...
+  } @ inputs:
+    inputs.pkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs system;
+      };
+      modules = [
+        {
+          inherit (inputs) hardwareConfig hostConfig;
+          imports = [
+            hardwareConfig
+            (import "${inputs.home-manager}/nixos")
+          ];
+
+          system.stateVersion = inputs.stateVersion;
+          boot.loader = inputs.bootConfig;
+          nix.settings.experimental-features = ["nix-command" "flakes"];
+          nixpkgs.config.allowUnfree = true;
+
+          services = {
+            xserver = {
+              enable = true;
+              displayManager.gdm = {
+                enable = true;
+                wayland = true;
+              };
+            };
+            blueman.enable = true;
+          };
+
+          networking = {
+            hostName = name;
+            networkmanager.enable = true;
+          };
+
+          time.timeZone = "${inputs.timeZone}";
+          il8n = inputs.localeSettings;
+          sound.enable = true;
+
+          programs.dconf.enable = true;
+          programs.hyprland.enable = true;
+          security.rtkit.enable = true;
+
+          # Enable gnome keyring for KeeWeb etc.
+          services.gnome.gnome-keyring.enable = true;
+          security.pam.services.login.enableGnomeKeyring = true;
+
+          environment = {
+            systemPackages = with inputs.pkgs;
+              [
+                # Basic utilities
+                wget
+                curl
+                pkg-config
+                efibootmgr
+
+                # System editor `hx`
+                helix
+
+                # Nix formatter
+                nixpkgs-fmt
+
+                # Clipboard for wl-copy
+                cliphist
+
+                # !TODO Key remapping, review
+                # keyd
+              ]
+              ++ hostPackages;
+          };
+        }
+      ];
+    };
+
+  # A function that creates a user configuration. It takes a list of packages,
+  # a system architecture, a username, a description, a git configuration, a list of
+  # extra packages, a list of session variables, a list of shell aliases, a list of
+  # user imports, and a color scheme as input and returns a NixOS user configuration.
   mkUser = {
     inputs,
     pkgs,
@@ -37,11 +132,13 @@
     name,
     description,
     gitConfig,
+    sopsConfig ? {},
     extraPackages ? [],
     sessionVariables ? {},
     shellAliases ? {},
     userImports ? [],
     colorScheme ? inputs.nix-colors.colorSchemes.dracula,
+    ...
   }: {
     users.users.${name} = {
       isNormalUser = true;
@@ -49,8 +146,21 @@
       extraGroups = ["networkmanager" "wheel"];
     };
 
+    # systemd.services.protonmail-bridge = {
+    #   enable = true;
+    #   description = "ProtonMail Bridge systemd service";
+    #   serviceConfig = {
+    #     ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge -n";
+    #   };
+    #   wantedBy = ["multi-user.target"];
+    # };
+
+    home-manager.sharedModules = [
+      inputs.sops-nix.homeManagerModules.sops
+    ];
+
     home-manager.users.${name} = {
-      colorScheme = colorScheme;
+      # colorScheme = colorScheme;
 
       nixpkgs.config = {
         allowUnfree = true;
@@ -60,6 +170,9 @@
           "nodejs-16.20.0"
         ];
       };
+
+      sops = sopsConfig;
+
       fonts.fontconfig.enable = true;
 
       home = {
@@ -103,5 +216,5 @@
     };
   };
 in {
-  inherit programs forEachSystem forEachPkgs mkNixos mkUser mkGitUser;
+  inherit programs forEachSystem forEachPkgs mkNixos mkUser mkGitUser mkHyprHost;
 }

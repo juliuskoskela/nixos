@@ -3,6 +3,12 @@
   fi = "hyprctl keyword input:kb_layout fi";
   en = "hyprctl keyword input:kb_layout us";
 
+  # Firefox shortcuts
+
+  reddit = "firefox -new-window https://reddit.com";
+  youtube = "firefox -new-window https://youtube.com";
+  protonmail = "firefox -new-window https://mail.protonmail.com";
+
   # Nix commands
   rebuild = "sudo nixos-rebuild --flake '.#'$(hostname) switch --impure";
 

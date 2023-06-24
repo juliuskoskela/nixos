@@ -6,13 +6,13 @@
   inherit (sessionVariables) TERMINAL BROWSER EDITOR;
 in ''
   general {
-    gaps_in=5
-    gaps_out=10
+    gaps_in=3
+    gaps_out=6
     border_size=1.5
-    col.active_border=0xff${colorScheme.colors.base04}
-    col.inactive_border=0xff${colorScheme.colors.base02}
-    col.group_border_active=0xff${colorScheme.colors.base0B}
-    col.group_border=0xff${colorScheme.colors.base04}
+    col.active_border=0xff666666
+    col.inactive_border=0xff${colorScheme.colors.base01}
+    col.group_border_active=0xff${colorScheme.colors.base04}
+    col.group_border=0xff${colorScheme.colors.base02}
     cursor_inactive_timeout=4
   }
 
@@ -55,7 +55,8 @@ in ''
   }
 
   dwindle {
-    split_width_multiplier=1.35
+    split_width_multiplier=1
+    no_gaps_when_only=true
   }
 
   misc {
@@ -78,15 +79,16 @@ in ''
 
   # Startup
   exec-once=waybar
-  exec-once=swaybg -i ~/Pictures/wallpapers/dark-valley.jpg
+  exec-once=swaybg -i ~/Pictures/wallpapers/jupiter.png --mode fill
   exec-once=mako
   exec-once=swayidle -w
+  exec-once = protonmail-bridge --noninteractive
   exec-once = wl-paste --type text --watch cliphist store
   exec-once = wl-paste --type image --watch cliphist store
 
   # Mouse binding
-  bindm=SUPER,mouse:272,movewindow
-  bindm=SUPER,mouse:273,resizewindow
+  bindm=SUPER,mouse:272,resizewindow
+  bindm=SUPER,mouse:273,movewindow
 
   # Program bindings
   bind = SUPER,Return,exec,${TERMINAL} -e zsh

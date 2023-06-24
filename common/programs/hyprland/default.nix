@@ -15,7 +15,8 @@
     swaybg
     swayidle
     wofi
-    # TODO
+    mako
+    # TODO Is this needed?
     # inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland
   ];
 

@@ -3,17 +3,15 @@ with pkgs; [
   # Browser
   firefox
 
-  # Window Manager GUI
-  rofi
-  feh
-  i3-gaps
-
   # Editors
   vscode
   lapce
 
   # Productivity
   obsidian
+
+  # !TODO: Figure configuration
+  zathura
 
   # Communication
   zulip
@@ -24,8 +22,9 @@ with pkgs; [
   protonmail-bridge
   neomutt
 
-  # Java
+  # Langauges
   jdk19
+  perl
 
   # Tools
   nextcloud-client
@@ -35,6 +34,8 @@ with pkgs; [
   nixpkgs-fmt
   hardinfo
   appimage-run
+  ripgrep
+  fd
 
   # Entertainment
   steam

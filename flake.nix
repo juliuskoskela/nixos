@@ -20,6 +20,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Secrets are decrypted from sops files during activation time. The secrets are
+    # stored as one secret per file and access-controlled by full declarative
+    # configuration of their users, permissions, and groups. GPG keys or age keys can
+    # be used for decryption, and compatibility shims are supported to enable the use
+    # of SSH RSA or SSH Ed25519 keys. Sops also supports cloud key management APIs
+    # such as AWS KMS, GCP KMS, Azure Key Vault and Hashicorp Vault. While not
+    # officially supported by sops-nix yet, these can be controlled using environment
+    # variables that can be passed to sops.
+    sops-nix.url = "github:Mic92/sops-nix";
+
     # Flake-utils is a utility library specifically designed for working with
     # flakes in Nix. It offers a collection of functions and tools that assist
     # in the development and management of Nix flakes, simplifying tasks such
@@ -64,6 +74,21 @@
 
     # nix-colors helps with creating system-wide color templates for Nix.
     nix-colors.url = "github:misterio77/nix-colors";
+
+    # More colors...
+    base16.url = "github:SenchoPens/base16.nix";
+    base16-schemes = {
+      url = github:base16-project/base16-schemes;
+      flake = false;
+    };
+    base16-zathura = {
+      url = github:haozeke/base16-zathura;
+      flake = false;
+    };
+    base16-vim = {
+      url = github:base16-project/base16-vim;
+      flake = false;
+    };
   };
 
   outputs = {
@@ -81,7 +106,6 @@
         stateVersion = "23.05";
         common = import ./common {inherit inputs;};
       };
-    users = import ./users;
   in {
     # The nixosConfigurations attribute in the flake.nix file defines
     # different NixOS system configurations that can be built using the
@@ -90,12 +114,57 @@
       nova = inputs.common.mkNixos [
         ./hosts/nova
         ./users/juliuskoskela
+        inputs.base16.nixosModule
+        # !TODO: Setup secrets management
+        inputs.sops-nix.nixosModules.sops
+        {scheme = "${inputs.base16-schemes}/tokyo-night-dark.yaml";}
+        ./theming.nix
       ] "x86_64-linux";
 
       #   luna = inputs.common.mkNixos [
       #     ./hosts/luna
       #     ./users/juliuskoskela-luna
       #   ];
+
+      # !TODO: Problems with propagating `pkgs`
+      # vega = import ./hosts/vega {
+      #   inherit (inputs) common;
+      # };
+
+      # vega = inputs.common.mkHyprHost {
+      #   pkgs = inputs.nixpkgs;
+      #   name = "vega";
+      #   system = "x86_64-linux";
+      #   home-manager = inputs.home-manager;
+      #   stateVersion = "23.05";
+      #   timeZone = "Europe/Helsinki";
+      #   localeSettings = {
+      #     defaultLocale = "en_US.UTF-8";
+      #   };
+      #   hardwareConfig = ./hosts/vega/hardware-configuration.nix;
+      #   bootConfig = {
+      #     timeout = 30;
+      #     efi = {
+      #       efiSysMountPoint = "/boot/efi";
+      #     };
+      #     grub = {
+      #       enable = true;
+      #       theme = inputs.pkgs.nixos-grub2-theme;
+      #       efiSupport = true;
+      #       efiInstallAsRemovable = true; # Otherwise /boot/EFI/BOOT/BOOTX64.EFI isn't generated
+      #       devices = ["nodev"];
+      #       useOSProber = true;
+      #       extraEntries = ''
+      #         menuentry "Reboot" {
+      #                 reboot
+      #         }
+      #         menuentry "Poweroff" {
+      #                 halt
+      #         }
+      #       '';
+      #     };
+      #   };
+      # };
     };
 
     devShells = inputs.common.forEachPkgs (pkgs: import ./shell.nix {inherit pkgs;});
