@@ -39,6 +39,7 @@ in
     userImports = [
       (inputs.common.programs.zsh {inherit pkgs shellAliases;})
       inputs.common.programs.nixvim
+      inputs.common.programs.kitty
       (inputs.common.programs.alacritty {inherit colorScheme;})
     ];
   }

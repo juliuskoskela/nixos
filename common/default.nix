@@ -10,121 +10,33 @@
     plasma = import ./programs/plasma;
     hyprland = import ./programs/hyprland;
     waybar = import ./programs/waybar;
+    kitty = import ./programs/kitty;
   };
-  # A function that generates attributes for each system architecture.
-  # It takes a list of system architectures as input and returns a set of attributes
+  # A function that generates attributes for each system architecture. It takes
+  # a list of system architectures as input and returns a set of attributes
   # with each architecture as the attribute name.
   forEachSystem = inputs.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"];
 
-  # A function that applies a given function to each system architecture
-  # and its corresponding package set. It takes a function as input and applies it to
-  # each system architecture's package set, returning the result as a set of attributes.
+  # A function that applies a given function to each system architecture and
+  # its corresponding package set. It takes a function as input and applies it
+  # to each system architecture's package set, returning the result as a set of
+  # attributes.
   forEachPkgs = f: forEachSystem (sys: f (inputs.nixpkgs.legacyPackages.${sys}));
 
   # A function that creates a NixOS host system configuration. It takes a
-  # module set as input and returns a NixOS system configuration with the provided
-  # module set and additional special arguments.
+  # module set as input and returns a NixOS system configuration with the
+  # provided module set and additional special arguments.
   mkNixos = modules: system:
     inputs.nixpkgs.lib.nixosSystem {
       inherit modules;
       specialArgs = {inherit inputs system;};
     };
 
-  # A function that creates a NixOS host system configuration using Hyprland
-  # on Wayland. It takes a list of packages, a system architecture, a system name,
-  # a state version, a hardware configuration, a boot configuration, a host configuration,
-  # a list of host packages, and a list of extra packages as input and returns a NixOS
-  # system configuration.
-  mkHyprHost = {
-    pkgs,
-    name,
-    system,
-    stateVersion,
-    timeZone,
-    localeSettings,
-    home-manager,
-    hardwareConfig,
-    bootConfig,
-    hostConfig ? {},
-    hostPackages ? [],
-    ...
-  } @ inputs:
-    inputs.pkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs system;
-      };
-      modules = [
-        {
-          inherit (inputs) hardwareConfig hostConfig;
-          imports = [
-            hardwareConfig
-            (import "${inputs.home-manager}/nixos")
-          ];
-
-          system.stateVersion = inputs.stateVersion;
-          boot.loader = inputs.bootConfig;
-          nix.settings.experimental-features = ["nix-command" "flakes"];
-          nixpkgs.config.allowUnfree = true;
-
-          services = {
-            xserver = {
-              enable = true;
-              displayManager.gdm = {
-                enable = true;
-                wayland = true;
-              };
-            };
-            blueman.enable = true;
-          };
-
-          networking = {
-            hostName = name;
-            networkmanager.enable = true;
-          };
-
-          time.timeZone = "${inputs.timeZone}";
-          il8n = inputs.localeSettings;
-          sound.enable = true;
-
-          programs.dconf.enable = true;
-          programs.hyprland.enable = true;
-          security.rtkit.enable = true;
-
-          # Enable gnome keyring for KeeWeb etc.
-          services.gnome.gnome-keyring.enable = true;
-          security.pam.services.login.enableGnomeKeyring = true;
-
-          environment = {
-            systemPackages = with inputs.pkgs;
-              [
-                # Basic utilities
-                wget
-                curl
-                pkg-config
-                efibootmgr
-
-                # System editor `hx`
-                helix
-
-                # Nix formatter
-                nixpkgs-fmt
-
-                # Clipboard for wl-copy
-                cliphist
-
-                # !TODO Key remapping, review
-                # keyd
-              ]
-              ++ hostPackages;
-          };
-        }
-      ];
-    };
-
   # A function that creates a user configuration. It takes a list of packages,
-  # a system architecture, a username, a description, a git configuration, a list of
-  # extra packages, a list of session variables, a list of shell aliases, a list of
-  # user imports, and a color scheme as input and returns a NixOS user configuration.
+  # a system architecture, a username, a description, a git configuration, a
+  # list of extra packages, a list of session variables, a list of shell
+  # aliases, a list of user imports, and a color scheme as input and returns a
+  # NixOS user configuration.
   mkUser = {
     inputs,
     pkgs,

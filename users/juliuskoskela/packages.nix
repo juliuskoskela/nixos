@@ -72,12 +72,4 @@ with pkgs; [
 
   # Texlive
   (texlive.combine {inherit (texlive) scheme-medium xifthen ifmtarg framed paralist titlesec;})
-
-  # Gnome Extensions
-  gnomeExtensions.user-themes
-  gnomeExtensions.tray-icons-reloaded
-  gnomeExtensions.vitals
-  gnomeExtensions.dash-to-panel
-  gnomeExtensions.sound-output-device-chooser
-  gnomeExtensions.space-bar
 ]

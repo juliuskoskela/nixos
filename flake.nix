@@ -3,6 +3,12 @@
 {
   description = "NixOS system configurations";
 
+  nixosConfigurations = {
+    nova = import ./hosts/nova.nix;
+    luna = import ./hosts/luna.nix;
+    vega = import ./hosts/vega.nix;
+  };
+
   inputs = {
     # Nixpkgs is a comprehensive collection of packages, package definitions,
     # and build infrastructure used by Nix and NixOS. It provides a wide range

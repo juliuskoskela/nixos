@@ -27,6 +27,11 @@ pkgs: {
     # Bookmarks: new bookmark <mm>, next bookmark <mn>, ...
     vim-bookmarks
 
+    nvim-treesitter
+
+    neotest
+    neotest-rust
+
     # TODO: Couldn't get these to work, but interesting...
     # noice-nvim
     # nvim-notify
@@ -35,6 +40,7 @@ pkgs: {
 
   options = {
     number = true;
+    tabstop = 2;
   };
 
   # Key mappings
