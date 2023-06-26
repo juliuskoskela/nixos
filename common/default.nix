@@ -67,9 +67,9 @@
     #   wantedBy = ["multi-user.target"];
     # };
 
-    home-manager.sharedModules = [
-      inputs.sops-nix.homeManagerModules.sops
-    ];
+    # home-manager.sharedModules = [
+    #   inputs.sops-nix.homeManagerModules.sops
+    # ];
 
     home-manager.users.${name} = {
       # colorScheme = colorScheme;
@@ -83,7 +83,7 @@
         ];
       };
 
-      sops = sopsConfig;
+      # sops = sopsConfig;
 
       fonts.fontconfig.enable = true;
 
@@ -99,7 +99,7 @@
       imports =
         [
           # (inputs.common.programs.hyprland {inherit inputs pkgs sessionVariables colorScheme;})
-          (inputs.common.programs.waybar {inherit system inputs pkgs sessionVariables colorScheme;})
+          # (inputs.common.programs.waybar {inherit system inputs pkgs sessionVariables colorScheme;})
           # inputs.nixvim.homeManagerModules.nixvim
           inputs.nix-colors.homeManagerModules.default
         ]
@@ -107,13 +107,13 @@
 
       programs.git = mkGitUser gitConfig;
 
-      services = {
-        gpg-agent = {
-          enable = true;
-          defaultCacheTtl = 1800;
-          enableSshSupport = true;
-        };
-      };
+      # services = {
+      #   gpg-agent = {
+      #     enable = true;
+      #     defaultCacheTtl = 1800;
+      #     enableSshSupport = true;
+      #   };
+      # };
     };
   };
 

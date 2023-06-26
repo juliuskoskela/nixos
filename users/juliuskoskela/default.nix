@@ -8,7 +8,7 @@
   shellAliases = import ./aliases.nix;
   colorScheme = inputs.nix-colors.colorSchemes.dracula;
   sessionVariables = import ./environment.nix;
-  extraPackages = import ./packages.nix pkgs;
+  # extraPackages = import ./packages.nix pkgs;
 in
   inputs.common.mkUser {
     inherit
@@ -18,7 +18,7 @@ in
       shellAliases
       colorScheme
       sessionVariables
-      extraPackages
+      # extraPackages
       ;
 
     name = "juliuskoskela";
@@ -32,9 +32,9 @@ in
     };
 
     userImports = [
-      (inputs.common.programs.zsh {inherit pkgs shellAliases;})
+      # (inputs.common.programs.zsh {inherit pkgs shellAliases;})
       # inputs.common.programs.nixvim
-      inputs.common.programs.kitty
-      (inputs.common.programs.alacritty {inherit colorScheme;})
+      # inputs.common.programs.kitty
+      # (inputs.common.programs.alacritty {inherit colorScheme;})
     ];
   }

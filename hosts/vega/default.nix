@@ -59,7 +59,7 @@ in {
   };
 
   # Bootloader.
-  boot.loader.grub.enable = false;
+  # boot.loader.grub.enable = false;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -145,7 +145,7 @@ in {
   # security.pam.services.login.enableGnomeKeyring = true;
 
   # Defalt configurations from configuration.nix.
-  # programs.dconf.enable = true;
+  programs.dconf.enable = true;
   sound.enable = true;
   security.rtkit.enable = true;
 
