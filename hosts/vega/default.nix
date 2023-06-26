@@ -5,6 +5,16 @@
   ...
 }: let
   name = "nova";
+
+  # Get the last working revision with nvidia 460.x
+  nixos-unstable-pinned = import (builtins.fetchTarball {
+    name = "nixos-unstable_nvidia-x11-470.57.02";
+    url = https://github.com/nixos/nixpkgs/archive/03100da5a714a2b6c5210ceb6af092073ba4fce5.tar.gz;
+    sha256 = "0bblrvhig7vwiq2lgjrl5ibil3sz7hj26gaip6y8wpd9xcjr3v7a";
+  }) { config.allowUnfree = true; };
+  # We'll use this twice
+  pinnedKernelPackages = nixos-unstable-pinned.linuxPackages_latest;
+  stremio = pkgs.callPackage /root/nix-config/devices/config/packages/stremio/default.nix {};
 in {
   imports = [
     ./hardware-configuration.nix
@@ -49,6 +59,7 @@ in {
   };
 
   # Bootloader.
+  boot.loader.grub.enable = false;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -61,17 +72,21 @@ in {
   };
 
   # Nvidia settings
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "nvidia-x11"
-    ];
-    
-  hardware.nvidia = {
-    modesetting.enable = true;
-    open = true;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.stable;
+  # Install nvidia 460
+  nixpkgs.config.packageOverrides = pkgs: {
+    # Swap out all of the linux packages
+    linuxPackages_latest = pinnedKernelPackages;
+    # Make sure x11 will use the correct package as well
+    nvidia_x11 = nixos-unstable-pinned.nvidia_x11;
   };
+
+  boot = {
+      # Line up your kernel packages at boot
+      kernelPackages = pinnedKernelPackages;
+      # kernelParams = [
+      #   "nouveau.modeset=0"
+      # ];
+    };
 
   # Enable essential services.
   services = {
@@ -81,6 +96,7 @@ in {
       displayManager.gdm = {
         enable = true;
         wayland = true;
+        nvidiaWayland = true;
       };
     };
     blueman.enable = true;
@@ -93,6 +109,10 @@ in {
       pulse.enable = true;
     };
   };
+
+  # Enable Hyprland window manager (Wayland).
+  programs.hyprland.enable = true;
+  # xdg.portal.wlr.enable = true;
 
   # Networking options. Hostname is set to the name of the host.
   networking = {
@@ -117,9 +137,6 @@ in {
     };
   };
 
-  # Enable Hyprland window manager (Wayland).
-  programs.hyprland.enable = true;
-  xdg.portal.wlr.enable = true;
   services.dbus.enable = true;
 
   # Enable gnome keyring for KeeWeb etc.
