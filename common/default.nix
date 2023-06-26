@@ -128,5 +128,5 @@
     };
   };
 in {
-  inherit programs forEachSystem forEachPkgs mkNixos mkUser mkGitUser mkHyprHost;
+  inherit programs forEachSystem forEachPkgs mkNixos mkUser mkGitUser;
 }
