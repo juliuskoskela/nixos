@@ -8,7 +8,7 @@
     # and build infrastructure used by Nix and NixOS. It provides a wide range
     # of pre-built packages for various purposes, including system utilities,
     # programming languages, libraries, desktop environments, and applications.
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Home-manager is a powerful tool for managing user-specific configurations
     # using the Nix package manager. It allows users to declaratively define
@@ -103,7 +103,7 @@
     inputs =
       flake-inputs
       // {
-        stateVersion = "23.05";
+        stateVersion = "unstable";
         common = import ./common {inherit inputs;};
       };
   in {
@@ -113,7 +113,7 @@
     nixosConfigurations = {
       vega = inputs.common.mkNixos [
         ./hosts/nova
-        ./users/juliuskoskela
+        # ./users/juliuskoskela
       ] "x86_64-linux";
     };
 
