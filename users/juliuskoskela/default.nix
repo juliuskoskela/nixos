@@ -25,11 +25,6 @@ in
 
     description = "Julius Koskela's personal user.";
 
-    sopsConfig = {
-      age.keyFile = "/home/juliuskoskela/.secrets/age/age.key";
-      defaultSopsFile = "./secrets.yaml";
-    };
-
     gitConfig = {
       name = "Julius Koskela";
       email = "me@juliuskoskela.dev";

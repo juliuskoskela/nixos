@@ -111,16 +111,6 @@
     # different NixOS system configurations that can be built using the
     # mkNixos function from the lib library.
     nixosConfigurations = {
-      nova = inputs.common.mkNixos [
-        ./hosts/nova
-        ./users/juliuskoskela
-        inputs.base16.nixosModule
-        # !TODO: Setup secrets management
-        inputs.sops-nix.nixosModules.sops
-        {scheme = "${inputs.base16-schemes}/tokyo-night-dark.yaml";}
-        ./theming.nix
-      ] "x86_64-linux";
-
       vega = inputs.common.mkNixos [
         ./hosts/nova
         ./users/juliuskoskela

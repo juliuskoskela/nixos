@@ -8,7 +8,6 @@
 in {
   imports = [
     ./hardware-configuration.nix
-    # inputs.sops-nix.nixosModules.sops
     (import "${inputs.home-manager}/nixos")
   ];
 
@@ -38,6 +37,17 @@ in {
   # the same system version (for example "23.05").
   system.stateVersion = inputs.stateVersion;
 
+   # Configure nix and nixpkgs.
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nixpkgs.config = {
+    allowUnfree = true;
+    # HACK: Required by nixvim and Copilot, remove if Copilot is udpated
+    # to use the new version of nodejs.
+    permittedInsecurePackages = [
+      "nodejs-16.20.0"
+    ];
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -51,30 +61,23 @@ in {
   };
 
   # Nvidia settings
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "nvidia-x11"
+    ];
+    
   hardware.nvidia = {
     modesetting.enable = true;
-    prime = mkIf cfg.prime {
-      sync.enable = true;
-      intelBusId = mkDefault "PCI:0:2:0";
-      nvidiaBusId = mkDefault "PCI:1:0:0";
-    };
-  };
-
-  # Configure nix and nixpkgs.
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nixpkgs.config = {
-    allowUnfree = true;
-    # HACK: Required by nixvim and Copilot, remove if Copilot is udpated
-    # to use the new version of nodejs.
-    permittedInsecurePackages = [
-      "nodejs-16.20.0"
-    ];
+    opne = true;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.stable;
   };
 
   # Enable essential services.
   services = {
     xserver = {
       enable = true;
+      videoDrivers = ["nvidia"];
       displayManager.gdm = {
         enable = true;
         wayland = true;

@@ -22,7 +22,13 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.default;
+    nvidiaPatches = true;
+    systemdIntegration = true;
+    xwayland = {
+      enable = true;
+      hidpi = false;
+    };
+    # package = inputs.hyprland.packages.${pkgs.system}.default;
     extraConfig = import ./config.nix {
       inherit sessionVariables colorScheme;
     };
