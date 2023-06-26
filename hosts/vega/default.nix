@@ -68,7 +68,7 @@ in {
     
   hardware.nvidia = {
     modesetting.enable = true;
-    opne = true;
+    open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.stable;
   };
@@ -119,13 +119,15 @@ in {
 
   # Enable Hyprland window manager (Wayland).
   programs.hyprland.enable = true;
+  xdg.portal.wlr.enable = true;
+  services.dbus.enable = true;
 
   # Enable gnome keyring for KeeWeb etc.
-  services.gnome.gnome-keyring.enable = true;
-  security.pam.services.login.enableGnomeKeyring = true;
+  # services.gnome.gnome-keyring.enable = true;
+  # security.pam.services.login.enableGnomeKeyring = true;
 
   # Defalt configurations from configuration.nix.
-  programs.dconf.enable = true;
+  # programs.dconf.enable = true;
   sound.enable = true;
   security.rtkit.enable = true;
 

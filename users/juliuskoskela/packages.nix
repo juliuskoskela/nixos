@@ -4,7 +4,7 @@ with pkgs; [
   firefox
 
   # Editors
-  vscode
+  # vscode
   lapce
 
   # Productivity

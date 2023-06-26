@@ -79,10 +79,10 @@ in ''
 
   # Startup
   exec-once=waybar
-  exec-once=swaybg -i ~/Pictures/wallpapers/jupiter.png --mode fill
+  # exec-once=swaybg -i ~/Pictures/wallpapers/jupiter.png --mode fill
   exec-once=mako
   exec-once=swayidle -w
-  exec-once = protonmail-bridge --noninteractive
+  # exec-once = protonmail-bridge --noninteractive
   exec-once = wl-paste --type text --watch cliphist store
   exec-once = wl-paste --type image --watch cliphist store
 

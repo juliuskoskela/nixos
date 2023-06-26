@@ -5,7 +5,7 @@
   programs = {
     zsh = import ./programs/zsh;
     alacritty = import ./programs/alacritty;
-    nixvim = import ./programs/nixvim;
+    # nixvim = import ./programs/nixvim;
     gnome = import ./programs/gnome;
     plasma = import ./programs/plasma;
     hyprland = import ./programs/hyprland;
@@ -100,7 +100,7 @@
         [
           (inputs.common.programs.hyprland {inherit inputs pkgs sessionVariables colorScheme;})
           (inputs.common.programs.waybar {inherit system inputs pkgs sessionVariables colorScheme;})
-          inputs.nixvim.homeManagerModules.nixvim
+          # inputs.nixvim.homeManagerModules.nixvim
           inputs.nix-colors.homeManagerModules.default
         ]
         ++ userImports;

@@ -11,7 +11,7 @@
   ];
 
   home.packages = with pkgs; [
-    inputs.hyprwm-contrib.packages.${system}.grimblast
+    # inputs.hyprwm-contrib.packages.${system}.grimblast
     swaybg
     swayidle
     wofi
@@ -26,7 +26,6 @@
     systemdIntegration = true;
     xwayland = {
       enable = true;
-      hidpi = false;
     };
     # package = inputs.hyprland.packages.${pkgs.system}.default;
     extraConfig = import ./config.nix {

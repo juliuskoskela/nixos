@@ -68,9 +68,9 @@
     # and customizable text editor. It provides a curated set of plugins,
     # settings, and keybindings to enhance the Neovim editing experience,
     # making it suitable for various programming languages and workflows.
-    nixvim = {
-      url = "github:pta2002/nixvim";
-    };
+    # nixvim = {
+    #   url = "github:pta2002/nixvim";
+    # };
 
     # nix-colors helps with creating system-wide color templates for Nix.
     nix-colors.url = "github:misterio77/nix-colors";
