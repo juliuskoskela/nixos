@@ -3,12 +3,6 @@
 {
   description = "NixOS system configurations";
 
-  nixosConfigurations = {
-    nova = import ./hosts/nova.nix;
-    luna = import ./hosts/luna.nix;
-    vega = import ./hosts/vega.nix;
-  };
-
   inputs = {
     # Nixpkgs is a comprehensive collection of packages, package definitions,
     # and build infrastructure used by Nix and NixOS. It provides a wide range
@@ -117,60 +111,20 @@
     # different NixOS system configurations that can be built using the
     # mkNixos function from the lib library.
     nixosConfigurations = {
+      vega = inputs.common.mkNixos [
+        ./hosts/vega
+        ./users/juliuskoskela
+      ] "x86_64-linux";
+
+      luna = inputs.common.mkNixos [
+        ./hosts/luna
+        ./users/juliuskoskela
+      ] "x86_64-linux";
+
       nova = inputs.common.mkNixos [
         ./hosts/nova
         ./users/juliuskoskela
-        inputs.base16.nixosModule
-        # !TODO: Setup secrets management
-        inputs.sops-nix.nixosModules.sops
-        {scheme = "${inputs.base16-schemes}/tokyo-night-dark.yaml";}
-        ./theming.nix
       ] "x86_64-linux";
-
-      #   luna = inputs.common.mkNixos [
-      #     ./hosts/luna
-      #     ./users/juliuskoskela-luna
-      #   ];
-
-      # !TODO: Problems with propagating `pkgs`
-      # vega = import ./hosts/vega {
-      #   inherit (inputs) common;
-      # };
-
-      # vega = inputs.common.mkHyprHost {
-      #   pkgs = inputs.nixpkgs;
-      #   name = "vega";
-      #   system = "x86_64-linux";
-      #   home-manager = inputs.home-manager;
-      #   stateVersion = "23.05";
-      #   timeZone = "Europe/Helsinki";
-      #   localeSettings = {
-      #     defaultLocale = "en_US.UTF-8";
-      #   };
-      #   hardwareConfig = ./hosts/vega/hardware-configuration.nix;
-      #   bootConfig = {
-      #     timeout = 30;
-      #     efi = {
-      #       efiSysMountPoint = "/boot/efi";
-      #     };
-      #     grub = {
-      #       enable = true;
-      #       theme = inputs.pkgs.nixos-grub2-theme;
-      #       efiSupport = true;
-      #       efiInstallAsRemovable = true; # Otherwise /boot/EFI/BOOT/BOOTX64.EFI isn't generated
-      #       devices = ["nodev"];
-      #       useOSProber = true;
-      #       extraEntries = ''
-      #         menuentry "Reboot" {
-      #                 reboot
-      #         }
-      #         menuentry "Poweroff" {
-      #                 halt
-      #         }
-      #       '';
-      #     };
-      #   };
-      # };
     };
 
     devShells = inputs.common.forEachPkgs (pkgs: import ./shell.nix {inherit pkgs;});

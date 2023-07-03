@@ -11,6 +11,7 @@
     hyprland = import ./programs/hyprland;
     waybar = import ./programs/waybar;
     kitty = import ./programs/kitty;
+    wofi = import ./programs/wofi;
   };
   # A function that generates attributes for each system architecture. It takes
   # a list of system architectures as input and returns a set of attributes
@@ -55,7 +56,7 @@
     users.users.${name} = {
       isNormalUser = true;
       description = "${description}";
-      extraGroups = ["networkmanager" "wheel"];
+      extraGroups = ["networkmanager" "wheel" "dialout" ];
     };
 
     # systemd.services.protonmail-bridge = {
@@ -114,6 +115,14 @@
           enableSshSupport = true;
         };
       };
+
+      gtk = {
+        enable = true;
+        theme = {
+          name = "Materia-dark";
+          package = pkgs.materia-theme;
+        };
+      };
     };
   };
 
@@ -128,5 +137,5 @@
     };
   };
 in {
-  inherit programs forEachSystem forEachPkgs mkNixos mkUser mkGitUser mkHyprHost;
+  inherit programs forEachSystem forEachPkgs mkNixos mkUser mkGitUser;
 }

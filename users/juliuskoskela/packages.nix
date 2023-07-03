@@ -9,6 +9,7 @@ with pkgs; [
 
   # Productivity
   obsidian
+  blender
 
   # !TODO: Figure configuration
   zathura
@@ -25,6 +26,7 @@ with pkgs; [
   # Langauges
   jdk19
   perl
+  rustup
 
   # Tools
   nextcloud-client
@@ -36,6 +38,9 @@ with pkgs; [
   appimage-run
   ripgrep
   fd
+  blueman
+  minicom
+  usbutils
 
   # Entertainment
   steam

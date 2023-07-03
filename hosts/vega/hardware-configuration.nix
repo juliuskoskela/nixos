@@ -18,17 +18,17 @@
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/5f2dbea4-8909-4bcc-b394-68621787142b";
+    device = "/dev/disk/by-uuid/fcf6a2c5-e9e1-426c-88a4-bb2a687ae8e0";
     fsType = "ext4";
   };
 
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/31CD-78A8";
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/2651-564E";
     fsType = "vfat";
   };
 
   swapDevices = [
-    {device = "/dev/disk/by-uuid/b448595b-922c-4ebf-ac4d-37a2ce597072";}
+    {device = "/dev/disk/by-uuid/b333d325-7b2b-4d9a-986f-49c9dc6f405d";}
   ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -36,10 +36,9 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp37s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp9s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  # high-resolution display (deprectaed in 23.05)
-  # hardware.video.hidpi.enable = lib.mkDefault true;
 }

@@ -10,7 +10,7 @@
   protonmail = "firefox -new-window https://mail.protonmail.com";
 
   # Nix commands
-  rebuild = "sudo nixos-rebuild --flake '.#'$(hostname) switch --impure";
+  rebuild = "pushd /etc/nixos; sudo nixos-rebuild --flake '.#vega' switch; popd";
 
   # Git
   stage = "git add";

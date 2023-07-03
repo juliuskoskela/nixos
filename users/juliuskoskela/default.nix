@@ -33,13 +33,14 @@ in
     gitConfig = {
       name = "Julius Koskela";
       email = "me@juliuskoskela.dev";
-      gpgSignkey = "8539EF4CE6367B81";
+      gpgSignkey = "F8D04B433A9B977E";
     };
 
     userImports = [
       (inputs.common.programs.zsh {inherit pkgs shellAliases;})
       inputs.common.programs.nixvim
       inputs.common.programs.kitty
+      inputs.common.programs.wofi
       (inputs.common.programs.alacritty {inherit colorScheme;})
     ];
   }
