@@ -21,15 +21,15 @@ in
       extraPackages
       ;
 
-    name = "juliuskoskela";
+    name = "juliuskoskela-unikie";
 
     description = "Julius Koskela's professional user (Unikie)";
 
-    sopsConfig = {
-      age.keyFile = "/home/juliuskoskela/.secrets/age/age.key";
-      defaultSopsFile = "./secrets.yaml";
-    };
-
+    # sopsConfig = {
+    #   age.keyFile = "/home/juliuskoskela-unikie/.secrets/age/age.key";
+    #   defaultSopsFile = "/home/juliuskoskela-unikie/secrets.yaml";
+    # };
+    #
     gitConfig = {
       name = "Julius Koskela";
       email = "julius.koskela@unikie.com";

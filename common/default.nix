@@ -45,7 +45,7 @@
     name,
     description,
     gitConfig,
-    sopsConfig ? {},
+    # sopsConfig ? {},
     extraPackages ? [],
     sessionVariables ? {},
     shellAliases ? {},
@@ -68,9 +68,9 @@
     #   wantedBy = ["multi-user.target"];
     # };
 
-    home-manager.sharedModules = [
-      inputs.sops-nix.homeManagerModules.sops
-    ];
+    # home-manager.sharedModules = [
+    #   inputs.sops-nix.homeManagerModules.sops
+    # ];
 
     home-manager.users.${name} = {
       # colorScheme = colorScheme;
@@ -84,7 +84,7 @@
         ];
       };
 
-      sops = sopsConfig;
+      # sops = sopsConfig;
 
       fonts.fontconfig.enable = true;
 

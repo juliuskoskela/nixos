@@ -114,16 +114,19 @@
       vega = inputs.common.mkNixos [
         ./hosts/vega
         ./users/juliuskoskela
+        ./users/juliuskoskela-unikie
       ] "x86_64-linux";
 
       luna = inputs.common.mkNixos [
         ./hosts/luna
         ./users/juliuskoskela
+        ./users/juliuskoskela-unikie
       ] "x86_64-linux";
 
       nova = inputs.common.mkNixos [
         ./hosts/nova
         ./users/juliuskoskela
+        ./users/juliuskoskela-unikie
       ] "x86_64-linux";
     };
 
