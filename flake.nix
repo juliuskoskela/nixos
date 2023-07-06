@@ -9,6 +9,7 @@
     # of pre-built packages for various purposes, including system utilities,
     # programming languages, libraries, desktop environments, and applications.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Home-manager is a powerful tool for managing user-specific configurations
     # using the Nix package manager. It allows users to declaratively define

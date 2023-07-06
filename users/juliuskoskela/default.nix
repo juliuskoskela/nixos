@@ -6,7 +6,7 @@
   ...
 }: let
   shellAliases = import ./aliases.nix;
-  colorScheme = inputs.nix-colors.colorSchemes.dracula;
+  colorScheme = inputs.nix-colors.colorSchemes.tokyo-night-dark;
   sessionVariables = import ./environment.nix;
   extraPackages = import ./packages.nix pkgs;
 in
@@ -24,11 +24,6 @@ in
     name = "juliuskoskela";
 
     description = "Julius Koskela's personal user.";
-
-    # sopsConfig = {
-    #   age.keyFile = "/home/juliuskoskela/.secrets/age/age.key";
-    #   defaultSopsFile = "./secrets.yaml";
-    # };
 
     gitConfig = {
       name = "Julius Koskela";

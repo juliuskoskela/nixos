@@ -41,6 +41,7 @@ with pkgs; [
   blueman
   minicom
   usbutils
+  nmap
 
   # Entertainment
   steam

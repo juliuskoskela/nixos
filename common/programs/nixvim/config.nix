@@ -18,16 +18,8 @@ pkgs: {
     # Git command under G(it) menu
     vim-fugitive
 
-    # Rust file detection, syntax highlighting, formatting, Syntastic integration, and more.
-    rust-vim
-    # nvim-treesitter.withAllGrammars
     # Corrects ripgrep error with telescope
     telescope-live-grep-args-nvim
-
-    # Bookmarks: new bookmark <mm>, next bookmark <mn>, ...
-    vim-bookmarks
-
-    nvim-treesitter
 
     neotest
     neotest-rust
@@ -72,8 +64,8 @@ pkgs: {
     # Toggle floating terminal
     normal."<space>t".action = "<cmd>FloatermToggle<CR>";
 
-    # Git diff
-    normal."<space>d".action = "<cmd>G diff<CR>";
+    # Diagnostics
+    normal."<space>d".action = "<cmd>TroubleToggle<CR>";
   };
 
   plugins = {
@@ -83,7 +75,7 @@ pkgs: {
     comment-nvim.enable = true; # Comment with `gc` `gcc` etc.
     lualine.enable = true; # Status line
     telescope.enable = true; # Fuzzy finder
-    nvim-cmp.enable = true; # Autocompletion
+    trouble.enable = true; # Error list
     rust-tools.enable = true; # Rust tools
     neogit.enable = true; # Git integration
     indent-blankline.enable = true; # Indentation lines
@@ -165,7 +157,7 @@ pkgs: {
       enable = true;
       servers = {
         # Rust
-        rust-analyzer.enable = true;
+        # rust-analyzer.enable = true;
 
         # !TODO Find a better Nix linter, this was broken!
         rnix-lsp.enable = true;
@@ -192,12 +184,18 @@ pkgs: {
         bashls.enable = true;
       };
 
-      keymaps.lspBuf = {
-        K = "hover";
-        gD = "references";
-        gd = "definition";
-        gi = "implementation";
-        gt = "type_definition";
+      keymaps = {
+        lspBuf = {
+          K = "hover";
+          gD = "references";
+          gd = "definition";
+          gi = "implementation";
+          gt = "type_definition";
+        };
+        diagnostic = {
+          ne = "goto_next";
+          pe = "goto_prev";
+        };
       };
     };
   };
@@ -211,9 +209,8 @@ pkgs: {
     vim.g.copilot_assume_mapped = true
     vim.api.nvim_set_keymap("i", "<C-e>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
+    vim.keymap.set("n", "<space>n", vim.diagnostic.open_float)
+
     -- Remove backgrounds that don't stretch to the terminal window
-    vim.cmd(":highlight SignColumn guibg=NONE")
-    vim.cmd(":hi Normal guibg=NONE ctermbg=NONE")
-    vim.cmd[[hi NvimTreeNormal guibg=NONE ctermbg=NONE]]
   '';
 }

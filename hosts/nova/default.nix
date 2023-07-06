@@ -30,6 +30,7 @@ in {
       ssh-to-pgp
       protonmail-bridge
       hdparm
+      nmap
     ];
   };
 

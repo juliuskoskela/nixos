@@ -56,7 +56,7 @@
     users.users.${name} = {
       isNormalUser = true;
       description = "${description}";
-      extraGroups = ["networkmanager" "wheel" "dialout" ];
+      extraGroups = ["networkmanager" "wheel" "dialout"];
     };
 
     # systemd.services.protonmail-bridge = {
