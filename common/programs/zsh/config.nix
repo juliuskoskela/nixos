@@ -2,6 +2,7 @@
 {
   pkgs,
   shellAliases,
+  theme ? "robbyrussell",
 }: {
   enable = true;
   shellAliases = shellAliases;
@@ -9,10 +10,11 @@
   oh-my-zsh = {
     enable = true;
     plugins = ["git"];
-    theme = "robbyrussell";
+    theme = theme;
   };
 
   enableCompletion = true;
+
   plugins = [
     {
       name = "zsh-nix-shell";

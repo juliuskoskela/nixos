@@ -2,9 +2,7 @@
 pkgs: {
   enable = true;
 
-  colorschemes = {
-    tokyonight.enable = true;
-  };
+  colorschemes.tokyonight.enable = true;
 
   clipboard = {
     providers.wl-copy.enable = true;
@@ -12,18 +10,11 @@ pkgs: {
   };
 
   extraPlugins = with pkgs.vimPlugins; [
-    # Nix expressions in Neovim.
-    vim-nix
-
-    # Git command under G(it) menu
-    vim-fugitive
-
-    # Corrects ripgrep error with telescope
-    telescope-live-grep-args-nvim
-
+    vim-nix # Nix expressions in Neovim.
+    vim-fugitive # Git command under G(it) menu
+    telescope-live-grep-args-nvim # Corrects ripgrep error with telescope
     neotest
     neotest-rust
-
     # TODO: Couldn't get these to work, but interesting...
     # noice-nvim
     # nvim-notify
@@ -79,6 +70,7 @@ pkgs: {
     rust-tools.enable = true; # Rust tools
     neogit.enable = true; # Git integration
     indent-blankline.enable = true; # Indentation lines
+    treesitter.enable = true; # Syntax highlighting
 
     # Dashboard
     alpha = {
@@ -208,8 +200,6 @@ pkgs: {
     vim.g.copilot_no_tab_map = true
     vim.g.copilot_assume_mapped = true
     vim.api.nvim_set_keymap("i", "<C-e>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
-
-    vim.keymap.set("n", "<space>n", vim.diagnostic.open_float)
 
     -- Remove backgrounds that don't stretch to the terminal window
   '';
