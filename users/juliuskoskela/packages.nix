@@ -42,6 +42,9 @@ with pkgs; [
   minicom
   usbutils
   nmap
+  alsa-lib
+  alsa-tools
+  alsa-utils
 
   # Entertainment
   steam

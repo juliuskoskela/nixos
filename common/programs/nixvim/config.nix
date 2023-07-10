@@ -60,7 +60,7 @@ pkgs: {
   };
 
   plugins = {
-    copilot.enable = true; # Github CoPilot
+    copilot-vim.enable = true; # Github CoPilot
     nvim-tree.enable = true; # File browser
     gitgutter.enable = true; # Git information in editor gutter
     comment-nvim.enable = true; # Comment with `gc` `gcc` etc.
@@ -129,14 +129,6 @@ pkgs: {
       ];
     };
 
-    # barbar = {
-    #   enable = true;
-    #   autoHide = true;
-    # };
-    # dashboard.enable = true; # Dashboard !TODO coonfigure, now blank
-    # trouble.enable = true; # Error list
-    # coq-nvim.enable = true; # Autocompletion
-
     # Floating terminal
     floaterm = {
       enable = true;
@@ -175,6 +167,7 @@ pkgs: {
         # Bash
         bashls.enable = true;
       };
+
 
       keymaps = {
         lspBuf = {
