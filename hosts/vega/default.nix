@@ -12,6 +12,18 @@ in {
     (import "${inputs.home-manager}/nixos")
   ];
 
+  nix.buildMachines = [{
+    hostName = "awsarm";
+    system = "aarch64-linux";
+    maxJobs = 4;
+    sshUser = "juliuskoskela";
+    supportedFeatures = [ "kvm" "benchmark" "big-parallel" "nixos-test" ];
+    mandatoryFeatures = [];
+    sshKey = "/root/.ssh/unikie-aws-arm";
+  }];
+
+  nix.distributedBuilds = true;
+
   # Install system-wide packages.
   environment = {
     systemPackages = with pkgs; [
