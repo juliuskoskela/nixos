@@ -1,6 +1,6 @@
 {
   EDITOR = "nvim";
-  TERMINAL = "kitty";
+  TERMINAL = "alacritty";
   BROWSER = "firefox";
   GPG_TTY = "$(tty)";
 }
