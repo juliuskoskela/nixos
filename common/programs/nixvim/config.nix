@@ -168,7 +168,6 @@ pkgs: {
         bashls.enable = true;
       };
 
-
       keymaps = {
         lspBuf = {
           K = "hover";

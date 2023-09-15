@@ -45,6 +45,15 @@ with pkgs; [
   alsa-lib
   alsa-tools
   alsa-utils
+  dtc
+  putty
+  nftables
+  dnsmasq
+  deploy-rs
+  jq
+
+  # Testing
+  gpsd
 
   # Entertainment
   steam
@@ -53,6 +62,7 @@ with pkgs; [
   # Security
   gnupg
   keeweb
+  sops
 
   # Development
   gcc

@@ -9,7 +9,11 @@
 }: {
   programs.waybar = {
     enable = true;
-    package = inputs.hyprland.packages.${system}.waybar-hyprland;
+    # Not needed https://github.com/NixOS/nixpkgs/pull/250551/files
+    #
+    # edit: Breaks workspaces module
+    #
+    # package = inputs.hyprland.packages.${system}.waybar-hyprland;
 
     style = ''
         ${builtins.readFile "${pkgs.waybar}/etc/xdg/waybar/style.css"}
@@ -57,7 +61,7 @@
         spacing = 4;
 
         modules-left = [
-          "wlr/workspaces"
+          "hyprland/workspaces"
           "wlr/taskbar"
           "network"
         ];
@@ -82,7 +86,7 @@
             "foot"
           ];
         };
-        "wlr/workspaces" = {
+        "hyprland/workspaces" = {
           on-click = "activate";
           on-scroll-up = "hyprctl dispatch workspace e-1";
           on-scroll-down = "hyprctl dispatch workspace e+1";

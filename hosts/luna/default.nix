@@ -13,12 +13,28 @@ in {
     # inputs.common.programs.gnome
   ];
 
+  nix.buildMachines = [
+    {
+      hostName = "awsarm";
+      system = "aarch64-linux";
+      maxJobs = 16;
+      sshUser = "juliuskoskela";
+      supportedFeatures = ["kvm" "benchmark" "big-parallel" "nixos-test"];
+      mandatoryFeatures = [];
+      sshKey = "/root/.ssh/unikie-aws-arm";
+    }
+  ];
+
   system.stateVersion = inputs.stateVersion;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   # Setup keyfile
   boot.initrd.secrets = {
@@ -38,10 +54,20 @@ in {
   };
 
   hardware = {
-    bluetooth.enable = true;
+    bluetooth = {
+      enable = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+    };
     opengl.enable = true;
     opengl.driSupport32Bit = true; # Required for Steam
-    pulseaudio.enable = false;
+    pulseaudio = {
+      enable = true;
+      package = pkgs.pulseaudioFull;
+    };
   };
 
   services = {
@@ -51,21 +77,29 @@ in {
         enable = true;
         wayland = true;
       };
+      displayManager.setupCommands = ''
+        xrandr --output eDP-1 --primary --mode 1920x1080
+      '';
     };
     blueman.enable = true;
     printing.enable = true;
     openssh.enable = true;
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
+    # pipewire = {
+    #   enable = true;
+    #   alsa.enable = true;
+    #   alsa.support32Bit = true;
+    #   pulse.enable = true;
+    # };
   };
 
   networking = {
     hostName = name;
     networkmanager.enable = true;
+    firewall.extraCommands = ''
+      iptables -A FORWARD -i enp5s0 -o wlp3s0 -j ACCEPT
+      iptables -A FORWARD -i wlp3s0 -o enp5s0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+      iptables -t nat -A POSTROUTING -o wlp3s0 -j MASQUERADE
+    '';
   };
 
   time.timeZone = "Europe/Helsinki";
@@ -84,7 +118,6 @@ in {
     };
   };
 
-  programs.hyprland.xwayland.hidpi = false;
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
   programs.dconf.enable = true;
@@ -104,6 +137,7 @@ in {
       efibootmgr
       nixpkgs-fmt
       ripgrep
+      pulsemixer
     ];
   };
 }

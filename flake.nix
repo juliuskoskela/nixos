@@ -70,6 +70,7 @@
     # making it suitable for various programming languages and workflows.
     nixvim = {
       url = "github:pta2002/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # nix-colors helps with creating system-wide color templates for Nix.
@@ -88,6 +89,11 @@
     base16-vim = {
       url = github:base16-project/base16-vim;
       flake = false;
+    };
+
+    audio-logger = {
+      url = "github:nordic-dev-net/audio-logger/1-make-audio-logger-work-as-a-systemd-service-through-the-flake";
+      # follows = "nixpkgs";
     };
   };
 

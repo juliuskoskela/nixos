@@ -25,4 +25,6 @@
   nixos = "cd ~/Repos/nixos";
 
   mail = "protonmail-bridge &";
+
+  pdf = "zathura";
 }
