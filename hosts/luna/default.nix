@@ -25,6 +25,8 @@ in {
     }
   ];
 
+  nix.distributedBuilds = true;
+
   system.stateVersion = inputs.stateVersion;
 
   # Bootloader.

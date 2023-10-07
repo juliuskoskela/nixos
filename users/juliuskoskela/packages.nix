@@ -51,6 +51,10 @@ with pkgs; [
   dnsmasq
   deploy-rs
   jq
+  bison
+  flex
+  quilt
+  nushell
 
   # Testing
   gpsd
