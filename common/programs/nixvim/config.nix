@@ -72,6 +72,13 @@ pkgs: {
     indent-blankline.enable = true; # Indentation lines
     treesitter.enable = true; # Syntax highlighting
 
+    dap = {
+      enable = true;
+      extensions = {
+        dap-ui.enable = true;
+      };
+    };
+
     # Dashboard
     alpha = {
       enable = true;

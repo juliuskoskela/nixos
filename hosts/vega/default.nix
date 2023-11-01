@@ -136,6 +136,14 @@ in {
   sound.enable = true;
   security.rtkit.enable = true;
 
+  # nix.buildMachines = [{
+  #   hostName = "awsarm";
+  #   system = "aarch64-linux";
+  #   maxJobs = 4;
+  #   sshUser = "juliuskoskela";
+  #   sshKey = "/home/juliuskoskela/.ssh/dev-aarch64";
+  #   publicHostKey = "/home/juliuskoskela/.ssh/dev-aarch64.pub";
+  # }];
   # systemd.user.services.protonmail-bridge = {
   #   enable = true;
   #   description = "ProtonMail Bridge systemd service";
