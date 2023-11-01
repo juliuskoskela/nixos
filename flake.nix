@@ -117,11 +117,11 @@
     # different NixOS system configurations that can be built using the
     # mkNixos function from the lib library.
     nixosConfigurations = {
-      # vega = inputs.common.mkNixos [
-      #   ./hosts/vega
-      #   ./users/juliuskoskela
-      #   ./users/juliuskoskela-unikie
-      # ] "x86_64-linux";
+      vega = inputs.common.mkNixos [
+        ./hosts/vega
+        ./users/juliuskoskela
+        ./users/juliuskoskela-unikie
+      ] "x86_64-linux";
 
       luna = inputs.common.mkNixos [
         ./hosts/luna
