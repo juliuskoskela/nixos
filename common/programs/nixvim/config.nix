@@ -15,10 +15,6 @@ pkgs: {
     telescope-live-grep-args-nvim # Corrects ripgrep error with telescope
     neotest
     neotest-rust
-    # TODO: Couldn't get these to work, but interesting...
-    # noice-nvim
-    # nvim-notify
-    # leap-nvim
   ];
 
   options = {
@@ -26,38 +22,73 @@ pkgs: {
     tabstop = 2;
   };
 
-  # Key mappings
-  maps = {
+  keymaps = [
     # Close buffer
-    normal."<space>q".action = "<cmd>q<cr>";
+    {
+      key = "<space>q";
+      action = "<cmd>q<cr>";
+    }
 
     # Close buffer (force)
-    normal."<space>Q".action = "<cmd>q!<cr>";
+    {
+      key = "<space>Q";
+      action = "<cmd>q!<cr>";
+    }
 
     # Save buffer
-    normal."<space>w".action = "<cmd>w<cr>";
+    {
+      key = "<space>w";
+      action = "<cmd>w<cr>";
+    }
 
     # Toggle file explorer
-    normal."<space>e".action = "<cmd>NvimTreeToggle<cr>";
+    {
+      key = "<space>e";
+      action = "<cmd>NvimTreeToggle<cr>";
+    }
 
     # Toggle file finder
-    normal."<space>f".action = "<cmd>Telescope find_files<CR>";
+    {
+      key = "<space>f";
+      action = "<cmd>Telescope find_files<CR>";
+    }
 
     # Toggle buffer finder
-    normal."<space>b".action = "<cmd>Telescope buffers<CR>";
+    {
+      key = "<space>b";
+      action = "<cmd>Telescope buffers<CR>";
+    }
+
+    # Toggle live grep
+    {
+      key = "<space>g";
+      action = "<cmd>Telescope live_grep<CR>";
+    }
 
     # Toggle meta finder
-    normal."<space>p".action = "<cmd>Telescope<CR>";
+    {
+      key = "<space>p";
+      action = "<cmd>Telescope<CR>";
+    }
 
     # Toggle Git view
-    normal."<space>g".action = "<cmd>Neogit<CR>";
+    {
+      key = "<space>g";
+      action = "<cmd>Neogit<CR>";
+    }
 
     # Toggle floating terminal
-    normal."<space>t".action = "<cmd>FloatermToggle<CR>";
+    {
+      key = "<space>t";
+      action = "<cmd>FloatermToggle<CR>";
+    }
 
     # Diagnostics
-    normal."<space>d".action = "<cmd>TroubleToggle<CR>";
-  };
+    {
+      key = "<space>d";
+      action = "<cmd>TroubleToggle<CR>";
+    }
+  ];
 
   plugins = {
     copilot-vim.enable = true; # Github CoPilot
