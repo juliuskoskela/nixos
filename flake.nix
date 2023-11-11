@@ -20,31 +20,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Secrets are decrypted from sops files during activation time. The secrets are
-    # stored as one secret per file and access-controlled by full declarative
-    # configuration of their users, permissions, and groups. GPG keys or age keys can
-    # be used for decryption, and compatibility shims are supported to enable the use
-    # of SSH RSA or SSH Ed25519 keys. Sops also supports cloud key management APIs
-    # such as AWS KMS, GCP KMS, Azure Key Vault and Hashicorp Vault. While not
-    # officially supported by sops-nix yet, these can be controlled using environment
-    # variables that can be passed to sops.
-    sops-nix.url = "github:Mic92/sops-nix";
-
-    # Flake-utils is a utility library specifically designed for working with
-    # flakes in Nix. It offers a collection of functions and tools that assist
-    # in the development and management of Nix flakes, simplifying tasks such
-    # as building, testing, and deployment of flake-based projects.
-    flake-utils.url = "github:numtide/flake-utils";
-
-    # Microvm-nix is a project that provides a framework for building and
-    # managing micro virtual machines (microVMs) using Nix and Firecracker.
-    # It allows users to create lightweight, isolated VMs optimized for
-    # running a single application or service, providing enhanced security
-    # and resource efficiency compared to traditional virtual machines.
-    microvm-nix = {
+    microvm = {
       url = "github:astro/microvm.nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
     };
 
     # Hyprland is a Wayland window manager designed for a modern, efficient,
@@ -76,24 +54,14 @@
     # nix-colors helps with creating system-wide color templates for Nix.
     nix-colors.url = "github:misterio77/nix-colors";
 
-    # More colors...
-    base16.url = "github:SenchoPens/base16.nix";
-    base16-schemes = {
-      url = github:base16-project/base16-schemes;
-      flake = false;
-    };
-    base16-zathura = {
-      url = github:haozeke/base16-zathura;
-      flake = false;
-    };
-    base16-vim = {
-      url = github:base16-project/base16-vim;
-      flake = false;
+    # Terminal file manager.
+    yazi = {
+      url = "github:sxyazi/yazi";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    audio-logger = {
-      url = "github:nordic-dev-net/audio-logger/1-make-audio-logger-work-as-a-systemd-service-through-the-flake";
-      # follows = "nixpkgs";
+    dnglab = {
+      url = "github:juliuskoskela/dnglab";
     };
   };
 
@@ -101,11 +69,14 @@
     self,
     nixpkgs,
     home-manager,
-    nix-colors,
+    microvm,
     hyprland,
-    ...
+    hyprwm-contrib,
+    nixvim,
+    nix-colors,
+    yazi,
+    dnglab,
   } @ flake-inputs: let
-    # stateVersion = "23.05";
     inputs =
       flake-inputs
       // {

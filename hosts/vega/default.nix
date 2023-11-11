@@ -5,26 +5,126 @@
   ...
 }: let
   name = "vega";
+  microvm = inputs.microvm.nixosModules;
 in {
   imports = [
     ./hardware-configuration.nix
-    # inputs.sops-nix.nixosModules.sops
     (import "${inputs.home-manager}/nixos")
+    microvm.host
   ];
 
-  nix.buildMachines = [
-    {
-      hostName = "awsarm";
-      system = "aarch64-linux";
-      maxJobs = 4;
-      sshUser = "juliuskoskela";
-      supportedFeatures = ["kvm" "benchmark" "big-parallel" "nixos-test"];
-      mandatoryFeatures = [];
-      sshKey = "/root/.ssh/unikie-aws-arm";
-    }
-  ];
+  microvm.vms = {
+    vm-1 = {
+      # The package set to use for the microvm. This also determines the microvm's architecture.
+      # Defaults to the host system's package set if not given.
+      inherit pkgs;
 
-  nix.distributedBuilds = true;
+      # (Optional) A set of special arguments to be passed to the MicroVM's NixOS modules.
+      #specialArgs = {};
+
+      # The configuration for the MicroVM.
+      # Multiple definitions will be merged as expected.
+      config = {
+        # It is highly recommended to share the host's nix-store
+        # with the VMs to prevent building huge images.
+        microvm = {
+          shares = [
+            {
+              source = "/nix/store";
+              mountPoint = "/nix/.ro-store";
+              tag = "ro-store";
+              proto = "virtiofs";
+            }
+          ];
+
+          interfaces = [
+            {
+              type = "tap";
+              id = "vm-test1";
+              mac = "02:00:00:00:00:01";
+            }
+          ];
+        };
+
+        users.users.root.password = "root";
+
+        systemd.network.enable = true;
+
+        systemd.network.networks."20-lan" = {
+          matchConfig.Type = "ether";
+          networkConfig = {
+            Address = ["192.168.1.3/24" "2001:db8::b/64"];
+            Gateway = "192.168.1.1";
+            DNS = ["192.168.1.1"];
+            IPv6AcceptRA = true;
+            DHCP = "no";
+          };
+        };
+
+        services.openssh = {
+          enable = true;
+          settings.PermitRootLogin = "yes";
+        };
+      };
+    };
+  };
+
+  microvm.autostart = ["vm-1"];
+
+  systemd.network.enable = true;
+
+  systemd.network.networks."10-lan" = {
+    matchConfig.Name = ["eno1" "vm-*"];
+    networkConfig = {
+      Bridge = "br0";
+    };
+  };
+
+  systemd.network.netdevs."br0" = {
+    netdevConfig = {
+      Name = "br0";
+      Kind = "bridge";
+    };
+  };
+
+  systemd.network.networks."10-lan-bridge" = {
+    matchConfig.Name = "br0";
+    networkConfig = {
+      Address = ["192.168.1.2/24" "2001:db8::a/64"];
+      Gateway = "192.168.1.1";
+      DNS = ["192.168.1.1"];
+      IPv6AcceptRA = true;
+    };
+    linkConfig.RequiredForOnline = "routable";
+  };
+
+  nix = {
+    settings.experimental-features = ["nix-command" "flakes"];
+
+    buildMachines = [
+      {
+        hostName = "awsarm";
+        system = "aarch64-linux";
+        maxJobs = 32;
+        sshUser = "juliuskoskela";
+        supportedFeatures = ["kvm" "benchmark" "big-parallel" "nixos-test"];
+        mandatoryFeatures = [];
+        sshKey = "/root/.ssh/unikie-aws-arm";
+      }
+    ];
+
+    distributedBuilds = true;
+  };
+
+  # Configure nix and nixpkgs.
+  nixpkgs.config = {
+    allowUnfree = true;
+    # HACK: Required by nixvim and Copilot, remove if Copilot is udpated
+    # to use the new version of nodejs.
+    permittedInsecurePackages = [
+      "nodejs-16.20.0"
+    ];
+  };
 
   # Install system-wide packages.
   environment = {
@@ -53,14 +153,11 @@ in {
     };
   };
 
-  # Set system state version to the same as the input
-  # to ensure that both nixos and home-manager share
-  # the same system version (for example "23.05").
-  system.stateVersion = inputs.stateVersion;
-
   # Setup host system boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+  };
 
   # Additional hardware configuration.
   hardware = {
@@ -68,17 +165,6 @@ in {
     opengl.enable = true;
     opengl.driSupport32Bit = true; # Required for Steam
     pulseaudio.enable = false;
-  };
-
-  # Configure nix and nixpkgs.
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nixpkgs.config = {
-    allowUnfree = true;
-    # HACK: Required by nixvim and Copilot, remove if Copilot is udpated
-    # to use the new version of nodejs.
-    permittedInsecurePackages = [
-      "nodejs-16.20.0"
-    ];
   };
 
   # Enable essential services.
@@ -99,6 +185,9 @@ in {
       alsa.support32Bit = true;
       pulse.enable = true;
     };
+
+    # Enable gnome keyring for KeeWeb etc.
+    gnome.gnome-keyring.enable = true;
   };
 
   # Networking options. Hostname is set to the name of the host.
@@ -124,80 +213,23 @@ in {
     };
   };
 
-  # Enable Hyprland window manager (Wayland).
-  programs.hyprland.enable = true;
+  programs = {
+    # Enable Hyprland window manager (Wayland).
+    hyprland.enable = true;
+    dconf.enable = true;
+  };
 
-  # Enable gnome keyring for KeeWeb etc.
-  services.gnome.gnome-keyring.enable = true;
-  security.pam.services.login.enableGnomeKeyring = true;
+  security = {
+    # Enable Gnome Keyring for KeeWeb etc.
+    pam.services.login.enableGnomeKeyring = true;
+    rtkit.enable = true;
+    polkit.enable = true;
+  };
 
-  # Defalt configurations from configuration.nix.
-  programs.dconf.enable = true;
   sound.enable = true;
-  security.rtkit.enable = true;
 
-  # nix.buildMachines = [{
-  #   hostName = "awsarm";
-  #   system = "aarch64-linux";
-  #   maxJobs = 4;
-  #   sshUser = "juliuskoskela";
-  #   sshKey = "/home/juliuskoskela/.ssh/dev-aarch64";
-  #   publicHostKey = "/home/juliuskoskela/.ssh/dev-aarch64.pub";
-  # }];
-  # systemd.user.services.protonmail-bridge = {
-  #   enable = true;
-  #   description = "ProtonMail Bridge systemd service";
-  #   path = [pkgs.gnome.gnome-keyring]; # HACK:
-  #   serviceConfig = {
-  #     ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge -n";
-  #     WantedBy = ["default.target"];
-  #   };
-  # };
-
-  # TODO: Configure secrets management
-  # https://github.com/Mic92/sops-nix
-  # sops.secrets = {
-  #   master-key = {};
-  # };
-
-  # TODO: Not working currently, start bridge manually.
-  # systemd.user.services.protonmail-bridge = {
-  #   description = "Protonmail Bridge";
-  #   enable = true;
-  #   script = "${pkgs.protonmail-bridge}/bin/protonmail-bridge --noninteractive --log-level info";
-  #   path = [pkgs.gnome.gnome-keyring]; # HACK: https://github.com/ProtonMail/proton-bridge/issues/176
-  #   wantedBy = ["default.target"];
-  #   partOf = ["default.target"];
-  # };
-
-  # TODO: Use something like this to swap ALT and WIN keys
-  # Also check out https://gitlab.com/ajgrf/dotfiles/-/blob/master/nixos/modules/keyboard.nix
-  # using kanata.
-
-  #   systemd.services.keyd = {
-  #     enable = true;
-  #     description = "keyd key remapping daemon";
-  #     unitConfig = {
-  #       Requires = "local-fs.target";
-  #       After = "local-fs.target";
-  #     };
-  #     serviceConfig = {
-  #       Type = "simple";
-  #       ExecStart = "${pkgs.keyd}/bin/keyd";
-  #     };
-  #   };
-  #
-  #   environment.etc."keyd/default.conf".text = ''
-  #     [ids]
-  #
-  #     *
-  #
-  #     [main]
-  #
-  #     # Maps capslock to escape when pressed and control when held.
-  #     capslock = overload(control, esc)
-  #
-  #     # Remaps the escape key to capslock
-  #     esc = capslock
-  #   '';
+  # Set system state version to the same as the input
+  # to ensure that both nixos and home-manager share
+  # the same system version (for example "23.05").
+  system.stateVersion = inputs.stateVersion;
 }

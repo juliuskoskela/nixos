@@ -11,15 +11,15 @@ in ''
     border_size=1.5
     col.active_border=0xff666666
     col.inactive_border=0xff${colorScheme.colors.base01}
-    col.group_border_active=0xff${colorScheme.colors.base04}
-    col.group_border=0xff${colorScheme.colors.base02}
+    # col.group_border_active=0xff${colorScheme.colors.base04}
+    # col.group_border=0xff${colorScheme.colors.base02}
     cursor_inactive_timeout=4
   }
 
   decoration {
-    active_opacity=0.94
+    # active_opacity=0.94
     inactive_opacity=0.84
-    fullscreen_opacity=1.0
+    # fullscreen_opacity=1.0
     rounding=3
     # blur=true
     # blur_size=5

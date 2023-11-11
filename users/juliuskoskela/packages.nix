@@ -11,6 +11,7 @@ with pkgs; [
   obsidian
   blender
 
+  dnglab
   # !TODO: Figure configuration
   zathura
 
@@ -55,6 +56,7 @@ with pkgs; [
   flex
   quilt
   nushell
+  htop
 
   # Testing
   gpsd

@@ -46,7 +46,6 @@
     name,
     description,
     gitConfig,
-    # sopsConfig ? {},
     extraPackages ? [],
     sessionVariables ? {},
     shellAliases ? {},
@@ -60,22 +59,7 @@
       extraGroups = ["networkmanager" "wheel" "dialout"];
     };
 
-    # systemd.services.protonmail-bridge = {
-    #   enable = true;
-    #   description = "ProtonMail Bridge systemd service";
-    #   serviceConfig = {
-    #     ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge -n";
-    #   };
-    #   wantedBy = ["multi-user.target"];
-    # };
-
-    # home-manager.sharedModules = [
-    #   inputs.sops-nix.homeManagerModules.sops
-    # ];
-
     home-manager.users.${name} = {
-      # colorScheme = colorScheme;
-
       nixpkgs.config = {
         allowUnfree = true;
         # TODO! Required by nixvim and Copilot, remove if Copilot is udpated
@@ -84,8 +68,6 @@
           "nodejs-16.20.0"
         ];
       };
-
-      # sops = sopsConfig;
 
       fonts.fontconfig.enable = true;
 
