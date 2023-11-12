@@ -61,6 +61,9 @@ in ''
 
   misc {
     vfr=on
+    # Avoid cringe anime wallpaper...
+    force_hypr_chan=false
+    disable_hyprland_logo=true
   }
 
   input {
@@ -92,7 +95,7 @@ in ''
 
   # Program bindings
   bind = SUPER,Return,exec,${TERMINAL} -e zsh
-  # bind = SUPER,SHIFT,Return,exec,${TERMINAL} --working-directory $(pwd) -e zsh
+  bind = CONTROL SHIFT,Return,exec,${TERMINAL} --working-directory=$(pwd) -e zsh
   bind = SUPER,b,exec,${BROWSER}
 
   bind = SUPER,x,exec,wofi -S drun -x 10 -y 10 -W 25% -H 60%

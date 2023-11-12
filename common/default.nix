@@ -12,6 +12,7 @@
     waybar = import ./programs/waybar;
     kitty = import ./programs/kitty;
     wofi = import ./programs/wofi;
+    rofi = import ./programs/rofi;
     eww = import ./programs/eww;
   };
   # A function that generates attributes for each system architecture. It takes

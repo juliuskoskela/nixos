@@ -36,6 +36,7 @@ in
       inputs.common.programs.nixvim
       inputs.common.programs.kitty
       inputs.common.programs.wofi
+      inputs.common.programs.rofi
       inputs.common.programs.eww
       (inputs.common.programs.alacritty {inherit colorScheme;})
     ];
