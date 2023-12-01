@@ -5,12 +5,12 @@
   ...
 }: let
   name = "vega";
-  microvm = inputs.microvm.nixosModules;
+  # microvm = inputs.microvm.nixosModules;
 in {
   imports = [
     ./hardware-configuration.nix
     (import "${inputs.home-manager}/nixos")
-    microvm.host
+    # microvm.host
   ];
 
   # microvm.vms = {

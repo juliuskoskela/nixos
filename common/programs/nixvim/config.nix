@@ -183,7 +183,11 @@ pkgs: {
       enable = true;
       servers = {
         # Rust
-        rust-analyzer.enable = true;
+        rust-analyzer = {
+          enable = true;
+          installCargo = true;
+          installRustc = true;
+        };
 
         # !TODO Find a better Nix linter, this was broken!
         rnix-lsp.enable = true;
