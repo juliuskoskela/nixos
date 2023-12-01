@@ -80,7 +80,7 @@
     inputs =
       flake-inputs
       // {
-        stateVersion = "23.05";
+        stateVersion = "23.11";
         common = import ./common {inherit inputs;};
       };
   in {
@@ -91,7 +91,7 @@
       vega = inputs.common.mkNixos [
         ./hosts/vega
         ./users/juliuskoskela
-        ./users/juliuskoskela-unikie
+        # ./users/juliuskoskela-unikie
       ] "x86_64-linux";
 
       luna = inputs.common.mkNixos [

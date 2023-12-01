@@ -1,4 +1,4 @@
-# hosts/nova/default.nix
+# hosts/luna/default.nix
 {
   inputs,
   pkgs,

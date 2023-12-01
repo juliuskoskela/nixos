@@ -13,63 +13,63 @@ in {
     microvm.host
   ];
 
-  microvm.vms = {
-    vm-1 = {
-      # The package set to use for the microvm. This also determines the microvm's architecture.
-      # Defaults to the host system's package set if not given.
-      inherit pkgs;
-
-      # (Optional) A set of special arguments to be passed to the MicroVM's NixOS modules.
-      #specialArgs = {};
-
-      # The configuration for the MicroVM.
-      # Multiple definitions will be merged as expected.
-      config = {
-        # It is highly recommended to share the host's nix-store
-        # with the VMs to prevent building huge images.
-        microvm = {
-          shares = [
-            {
-              source = "/nix/store";
-              mountPoint = "/nix/.ro-store";
-              tag = "ro-store";
-              proto = "virtiofs";
-            }
-          ];
-
-          interfaces = [
-            {
-              type = "tap";
-              id = "vm-test1";
-              mac = "02:00:00:00:00:01";
-            }
-          ];
-        };
-
-        users.users.root.password = "root";
-
-        systemd.network.enable = true;
-
-        systemd.network.networks."20-lan" = {
-          matchConfig.Type = "ether";
-          networkConfig = {
-            Address = ["192.168.1.3/24" "2001:db8::b/64"];
-            Gateway = "192.168.1.1";
-            DNS = ["192.168.1.1"];
-            IPv6AcceptRA = true;
-            DHCP = "no";
-          };
-        };
-
-        services.openssh = {
-          enable = true;
-          settings.PermitRootLogin = "yes";
-        };
-      };
-    };
-  };
-
-  microvm.autostart = ["vm-1"];
+  # microvm.vms = {
+  #   vm-1 = {
+  #     # The package set to use for the microvm. This also determines the microvm's architecture.
+  #     # Defaults to the host system's package set if not given.
+  #     inherit pkgs;
+  #
+  #     # (Optional) A set of special arguments to be passed to the MicroVM's NixOS modules.
+  #     #specialArgs = {};
+  #
+  #     # The configuration for the MicroVM.
+  #     # Multiple definitions will be merged as expected.
+  #     config = {
+  #       # It is highly recommended to share the host's nix-store
+  #       # with the VMs to prevent building huge images.
+  #       microvm = {
+  #         shares = [
+  #           {
+  #             source = "/nix/store";
+  #             mountPoint = "/nix/.ro-store";
+  #             tag = "ro-store";
+  #             proto = "virtiofs";
+  #           }
+  #         ];
+  #
+  #         interfaces = [
+  #           {
+  #             type = "tap";
+  #             id = "vm-test1";
+  #             mac = "02:00:00:00:00:01";
+  #           }
+  #         ];
+  #       };
+  #
+  #       users.users.root.password = "root";
+  #
+  #       systemd.network.enable = true;
+  #
+  #       systemd.network.networks."20-lan" = {
+  #         matchConfig.Type = "ether";
+  #         networkConfig = {
+  #           Address = ["192.168.1.3/24" "2001:db8::b/64"];
+  #           Gateway = "192.168.1.1";
+  #           DNS = ["192.168.1.1"];
+  #           IPv6AcceptRA = true;
+  #           DHCP = "no";
+  #         };
+  #       };
+  #
+  #       services.openssh = {
+  #         enable = true;
+  #         settings.PermitRootLogin = "yes";
+  #       };
+  #     };
+  #   };
+  # };
+  #
+  # microvm.autostart = ["vm-1"];
 
   systemd.network.enable = true;
 

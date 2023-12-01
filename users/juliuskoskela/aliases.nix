@@ -27,4 +27,7 @@
   mail = "protonmail-bridge &";
 
   pdf = "zathura";
+
+  top = "btop";
+  htop = "btop";
 }

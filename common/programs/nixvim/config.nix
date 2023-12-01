@@ -102,6 +102,10 @@ pkgs: {
     neogit.enable = true; # Git integration
     indent-blankline.enable = true; # Indentation lines
     treesitter.enable = true; # Syntax highlighting
+    # nvim-ufo = {
+    #   enable = true; # Folding
+    #   providerSelector = "treesitter";
+    # };
 
     dap = {
       enable = true;
@@ -179,7 +183,7 @@ pkgs: {
       enable = true;
       servers = {
         # Rust
-        # rust-analyzer.enable = true;
+        rust-analyzer.enable = true;
 
         # !TODO Find a better Nix linter, this was broken!
         rnix-lsp.enable = true;

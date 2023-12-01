@@ -14,6 +14,7 @@
     wofi = import ./programs/wofi;
     rofi = import ./programs/rofi;
     eww = import ./programs/eww;
+    scripts = import ./programs/scripts;
   };
   # A function that generates attributes for each system architecture. It takes
   # a list of system architectures as input and returns a set of attributes
@@ -102,10 +103,6 @@
 
       gtk = {
         enable = true;
-        theme = {
-          name = "Materia-dark";
-          package = pkgs.materia-theme;
-        };
       };
     };
   };
