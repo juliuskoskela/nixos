@@ -8,7 +8,7 @@
     # and build infrastructure used by Nix and NixOS. It provides a wide range
     # of pre-built packages for various purposes, including system utilities,
     # programming languages, libraries, desktop environments, and applications.
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
 
     # Home-manager is a powerful tool for managing user-specific configurations
     # using the Nix package manager. It allows users to declaratively define
@@ -16,7 +16,7 @@
     # settings, and more, providing a consistent and reproducible environment
     # across different systems.
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
