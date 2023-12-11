@@ -10,6 +10,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     (import "${inputs.home-manager}/nixos")
+    inputs.sops-nix.nixosModules.sops
     # microvm.host
   ];
 

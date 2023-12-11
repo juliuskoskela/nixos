@@ -8,7 +8,7 @@
     # and build infrastructure used by Nix and NixOS. It provides a wide range
     # of pre-built packages for various purposes, including system utilities,
     # programming languages, libraries, desktop environments, and applications.
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Home-manager is a powerful tool for managing user-specific configurations
     # using the Nix package manager. It allows users to declaratively define
@@ -64,9 +64,7 @@
       url = "github:juliuskoskela/dnglab";
     };
 
-    roc = {
-      url = "github:roc-lang/roc";
-    };
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs = {
@@ -80,7 +78,7 @@
     nix-colors,
     yazi,
     dnglab,
-    roc,
+    sops-nix,
   } @ flake-inputs: let
     inputs =
       flake-inputs
