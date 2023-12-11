@@ -67,6 +67,7 @@ with pkgs; [
   htop # Process viewer
   btop # Process viewer
   neofetch # System information
+  inetutils # Telnet client
 
   # Testing
 

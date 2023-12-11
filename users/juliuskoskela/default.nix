@@ -36,6 +36,7 @@ in
       inputs.common.programs.nixvim
       inputs.common.programs.kitty
       inputs.common.programs.wofi
+      # inputs.roc.packages.x86_64-linux.full
       # inputs.common.programs.rofi
       # inputs.common.programs.scripts
       # inputs.common.programs.eww

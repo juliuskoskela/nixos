@@ -73,30 +73,30 @@ in {
 
   systemd.network.enable = true;
 
-  systemd.network.networks."10-lan" = {
-    matchConfig.Name = ["eno1" "vm-*"];
-    networkConfig = {
-      Bridge = "br0";
-    };
-  };
-
-  systemd.network.netdevs."br0" = {
-    netdevConfig = {
-      Name = "br0";
-      Kind = "bridge";
-    };
-  };
-
-  systemd.network.networks."10-lan-bridge" = {
-    matchConfig.Name = "br0";
-    networkConfig = {
-      Address = ["192.168.1.2/24" "2001:db8::a/64"];
-      Gateway = "192.168.1.1";
-      DNS = ["192.168.1.1"];
-      IPv6AcceptRA = true;
-    };
-    linkConfig.RequiredForOnline = "routable";
-  };
+  # systemd.network.networks."10-lan" = {
+  #   matchConfig.Name = ["eno1" "vm-*"];
+  #   networkConfig = {
+  #     Bridge = "br0";
+  #   };
+  # };
+  #
+  # systemd.network.netdevs."br0" = {
+  #   netdevConfig = {
+  #     Name = "br0";
+  #     Kind = "bridge";
+  #   };
+  # };
+  #
+  # systemd.network.networks."10-lan-bridge" = {
+  #   matchConfig.Name = "br0";
+  #   networkConfig = {
+  #     Address = ["192.168.1.2/24" "2001:db8::a/64"];
+  #     Gateway = "192.168.1.1";
+  #     DNS = ["192.168.1.1"];
+  #     IPv6AcceptRA = true;
+  #   };
+  #   linkConfig.RequiredForOnline = "routable";
+  # };
 
   nix = {
     settings.experimental-features = ["nix-command" "flakes"];
@@ -123,6 +123,7 @@ in {
     # to use the new version of nodejs.
     permittedInsecurePackages = [
       "nodejs-16.20.0"
+      "electron-25.9.0"
     ];
   };
 

@@ -63,6 +63,10 @@
     dnglab = {
       url = "github:juliuskoskela/dnglab";
     };
+
+    roc = {
+      url = "github:roc-lang/roc";
+    };
   };
 
   outputs = {
@@ -76,6 +80,7 @@
     nix-colors,
     yazi,
     dnglab,
+    roc,
   } @ flake-inputs: let
     inputs =
       flake-inputs
@@ -91,7 +96,7 @@
       vega = inputs.common.mkNixos [
         ./hosts/vega
         ./users/juliuskoskela
-        # ./users/juliuskoskela-unikie
+        ./users/juliuskoskela-unikie
       ] "x86_64-linux";
 
       luna = inputs.common.mkNixos [

@@ -185,8 +185,8 @@ pkgs: {
         # Rust
         rust-analyzer = {
           enable = true;
-          installCargo = true;
-          installRustc = true;
+          # installCargo = true;
+          # installRustc = true;
         };
 
         # !TODO Find a better Nix linter, this was broken!
