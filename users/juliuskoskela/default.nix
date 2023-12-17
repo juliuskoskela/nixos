@@ -27,8 +27,10 @@ in
 
     gitConfig = {
       name = "Julius Koskela";
-      email = "me@juliuskoskela.dev";
-      gpgSignkey = "F8D04B433A9B977E";
+      # email = "me@juliuskoskela.dev";
+      # gpgSignkey = "F8D04B433A9B977E";
+      email = "julius.koskela@nordic-dev.net";
+      gpgSignkey = "5A7B7F4897C2914B";
     };
 
     userImports = [

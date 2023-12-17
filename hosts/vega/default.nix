@@ -14,6 +14,46 @@ in {
     # microvm.host
   ];
 
+  boot.supportedFilesystems = ["cifs"];
+
+  services.davfs2 = {
+    enable = true;
+    davUser = "juliuskoskela";
+  };
+
+  sops = {
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "/home/juliuskoskela/.config/sops/age/keys.txt";
+  };
+
+  sops.secrets.nextcloud = {
+    owner = "juliuskoskela";
+    path = "/home/juliuskoskela/.config/davfs2/secrets";
+  };
+
+  # fileSystems."/run/mount/nextcloud" = {
+  #   device = "https://nc.nordic-dev.net/remote.php/dav/files/julius.koskela@nordic-dev.net/";
+  #   fsType = "cifs";
+  #   options = [
+  #     "username=julius.koskela@nordic-dev.net"
+  #     "password=YSgr15jKfa379c1g"
+  #     "rw"
+  #     "x-systemd.automount"
+  #   ];
+  # };
+
+  services.autofs = {
+    enable = true;
+    autoMaster = let
+      mapConf = pkgs.writeText "auto" ''
+        Nextcloud -fstype=davfs,conf=/home/juliuskoskela/.davfs2/secrets,uid=juliuskoskela :https\:nc.nordic-dev.net/remote.php/dav/files/julius.koskela@nordic-dev.net/
+      '';
+    in ''
+      /home/juliuskoskela/mounts file:${mapConf}
+    '';
+  };
+
   # microvm.vms = {
   #   vm-1 = {
   #     # The package set to use for the microvm. This also determines the microvm's architecture.
@@ -72,7 +112,7 @@ in {
   #
   # microvm.autostart = ["vm-1"];
 
-  systemd.network.enable = true;
+  # systemd.network.enable = true;
 
   # systemd.network.networks."10-lan" = {
   #   matchConfig.Name = ["eno1" "vm-*"];
@@ -112,6 +152,16 @@ in {
         mandatoryFeatures = [];
         sshKey = "/root/.ssh/unikie-aws-arm";
       }
+
+      # {
+      #   hostName = "nordic-dev.net";
+      #   system = "x86_64-linux";
+      #   maxJobs = 4;
+      #   sshUser = "root";
+      #   supportedFeatures = ["kvm" "benchmark" "big-parallel" "nixos-test"];
+      #   mandatoryFeatures = [];
+      #   sshKey = "/root/.ssh/hetzner_i7_64GB_8TB";
+      # }
     ];
 
     distributedBuilds = true;
@@ -148,6 +198,7 @@ in {
       hdparm
       pciutils
       pavucontrol
+      davfs2
     ];
 
     variables = {
@@ -190,6 +241,18 @@ in {
 
     # Enable gnome keyring for KeeWeb etc.
     gnome.gnome-keyring.enable = true;
+
+    # davfs2.enable = true;
+    # autofs = {
+    #   enable = true;
+    #   autoMaster = let
+    #     mapConf = pkgs.writeText "auto" ''
+    #       nextcloud -fstype=davfs,conf=/path/to/davfs/conf,uid=myuid :https\:nextcloud.domain/remote.php/webdav/
+    #     '';
+    #   in ''
+    #     /home/directory/mounts file:${mapConf}
+    #   '';
+    # };
   };
 
   # Networking options. Hostname is set to the name of the host.

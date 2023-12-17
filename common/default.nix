@@ -58,7 +58,7 @@
     users.users.${name} = {
       isNormalUser = true;
       description = "${description}";
-      extraGroups = ["networkmanager" "wheel" "dialout"];
+      extraGroups = ["networkmanager" "wheel" "dialout" "davfs2"];
     };
 
     home-manager.users.${name} = {

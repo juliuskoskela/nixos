@@ -9,9 +9,12 @@ with pkgs; [
 
   # Programming
 
+  tea # Gitea CLI
   vscode # Visual Studio Code
   lapce # Code editor build with Rust
-  github-desktop # Github desktop client
+  # github-desktop # Github desktop client
+  # gitkraken # Git client
+  # gitnuro # Git client
 
   # Productivity
 
@@ -22,6 +25,8 @@ with pkgs; [
 
   # Communication
 
+  irssi
+  mattermost-desktop
   zulip # Open source chatroom client
   slack # Proprietary chatroom client
   discord # Proprietary chatroom client
@@ -38,6 +43,10 @@ with pkgs; [
 
   # Tools
 
+  pandoc # Document converter
+  unzip # Unzip utility
+  spotdl # Spotify downloader
+  drone-cli # Drone CI
   nextcloud-client # Nextcloud client
   gh # Github CLI
   curl # URL transfer utility
