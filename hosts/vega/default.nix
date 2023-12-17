@@ -14,6 +14,10 @@ in {
     # microvm.host
   ];
 
+  services.udev.packages = [pkgs.yubikey-personalization];
+
+  services.pcscd.enable = true;
+
   boot.supportedFilesystems = ["cifs"];
 
   services.davfs2 = {

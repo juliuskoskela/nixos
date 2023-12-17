@@ -89,6 +89,10 @@ with pkgs; [
 
   # Security
 
+  pcscliteWithPolkit
+  yubikey-manager # Yubikey manager
+  yubikey-personalization
+  yubikey-personalization-gui
   gnupg # GPG encryption
   keeweb # Password manager
   sops # Encrypted file editor
